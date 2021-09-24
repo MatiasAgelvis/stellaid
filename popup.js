@@ -26,7 +26,7 @@ function setPageBackgroundColor() {
         return array[array.length - 1];
     }
 
-    function count (str, pattern) {
+    function count(str, pattern) {
         const re = RegExp(pattern, 'g')
         return ((str || '').match(re) || []).length
     }
@@ -40,7 +40,45 @@ function setPageBackgroundColor() {
     }
 
     function countLikes(review) {
-        return parseInt(review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/)[1])
+
+        let baseReviewValue = 0;
+        let peerPower = 3 / 2;
+
+
+        if (peerPower < 1) { peerPower = 1; }
+        // breaks if no one has liked the comment
+        var likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
+
+        return baseReviewValue + (likes ? parseInt(likes[1]) ** peerPower : 0);
+    }
+
+    function calculateScore(reviews) {
+        var score = 0;
+        var totalWeight = 0;
+
+        reviews.forEach(review => {
+            // console.log(countStars(review))
+            // console.log(countLikes(review))
+            // calculate the weighted average
+            score += countStars(review) * countLikes(review);
+            totalWeight += countLikes(review);
+        });
+
+        // calculate the definitive score of the course
+        score = score / totalWeight;
+
+        return score.toFixed(1)
+    }
+
+    function getReviews(html) {
+        // Convert the HTML string into a document object
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+
+        var reviews = doc.getElementsByClassName('review');
+
+        // returns an array so that is easier to iterate over later on
+        return Array.from(reviews);
     }
 
 
@@ -51,28 +89,10 @@ function setPageBackgroundColor() {
             return response.text();
         }).then(function(html) {
 
-            // Convert the HTML string into a document object
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'text/html');
+            var reviews = getReviews(html);
+            var score = calculateScore(reviews);
 
-            var reviews = doc.getElementsByClassName('review');
-            var reviews = Array.from(reviews);
-
-            var score = 0;
-            var totalWeight = 0;
-
-            reviews.forEach(review => {
-                console.log(countStars(review))
-                console.log(countLikes(review))
-                // calculate the weighted average
-                score += countStars(review) * countLikes(review);
-                totalWeight += countLikes(review);
-            });
-
-            // calculate the definitive score of the course
-            score = score / totalWeight;
-
-            console.log('Real adjusted score of the course:', score.toFixed(1));
+            console.log('Real adjusted score of the course:', score);
 
 
         }).catch(function(err) {
