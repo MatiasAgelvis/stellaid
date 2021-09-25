@@ -18,8 +18,9 @@ changeColor.addEventListener("click", async () => {
 
 // The body of this function will be execuetd as a content script inside the
 // current page
-function setPageBackgroundColor() {
+async function setPageBackgroundColor() {
     // let url = window.location.toString()
+    console.log('\n---------\n');
 
     // console.log(url);
     function last(array) {
@@ -41,7 +42,7 @@ function setPageBackgroundColor() {
         return fullStars + (halfStars / 2);
     }
 
-    function getAgeOfReview(review){
+    function getAgeOfReview(review) {
         // returns (currently) the age of the review in days since the Unix Epoch
         let daysFactor = 1000 * 3600 * 24;
 
@@ -94,7 +95,7 @@ function setPageBackgroundColor() {
         return Array.from(reviews);
     }
 
-    function getCourseraScore(){
+    function getCourseraScore() {
         // returns the official coursera valuation
         var score = document.getElementsByClassName('rating-text')[0].innerText;
         // return parseFloat(score);
@@ -102,17 +103,27 @@ function setPageBackgroundColor() {
         return parseFloat(score.match(/[\d\.]+/));
     }
 
-    function getNumberRatings(){
+    function getNumberRatings() {
         // returns the total number of reviews of the course in coursera
         var count = document.querySelector('[data-test="ratings-count-without-asterisks"]').innerText;
         // we must remove the thousend comma separator
         return parseInt(count.replace(/,/g, ''));
     }
 
-    function courseraScore(){
+    function courseraScore() {
         // debug func
         console.log(getCourseraScore());
         console.log(getNumberRatings());
+    }
+
+
+    async function fetchReviewPage(course) {
+        response = await fetch('https://www.coursera.org/learn/' + course + '/reviews');
+        
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(await response.text(), 'text/html');
+
+        return doc;
     }
 
 
@@ -125,7 +136,7 @@ function setPageBackgroundColor() {
         }).then(function(html) {
 
             // the peer reviewed reviews get to decide 4 stars
-            let peerStars = 4/5;
+            let peerStars = 4 / 5;
             // the rest depends on the agregate from coursera
             let voxPopuliStars = 1 - peerStars;
 
@@ -138,7 +149,7 @@ function setPageBackgroundColor() {
 
 
             console.log('Real adjusted score of the course:', score);
-            
+
             // here will go the style modification
             // we will make to the course valuation
 
@@ -160,6 +171,9 @@ function setPageBackgroundColor() {
             break;
         case 'learn':
             console.log(url[2]);
+            let a = await fetchReviewPage(url[2]);
+            console.log((await fetchReviewPage(url[2])).getElementsByClassName('review'));
+            console.log(a.getElementsByClassName('review'));
             getCourseReviews(url[2]);
             break;
         default:
