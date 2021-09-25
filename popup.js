@@ -23,16 +23,18 @@ function setPageBackgroundColor() {
 
     // console.log(url);
     function last(array) {
+        // returns the last element of the given array
         return array[array.length - 1];
     }
 
     function count(str, pattern) {
+        // returns the number of marches of a pattern in a string
         const re = RegExp(pattern, 'g')
         return ((str || '').match(re) || []).length
     }
 
     function countStars(review) {
-
+        // returns the number of stars given by the reviewer
         let fullStars = count(review.innerHTML, '<title .*?>Filled Star</title>');
         let halfStars = count(review.innerHTML, '<title .*?>Half Star</title>');
 
@@ -40,7 +42,7 @@ function setPageBackgroundColor() {
     }
 
     function getAgeOfReview(review){
-        // currently returns the age of the review in days since the Unix Epoch
+        // returns (currently) the age of the review in days since the Unix Epoch
         let daysFactor = 1000 * 3600 * 24;
 
         var date = Date.parse(review.getElementsByClassName('dateOfReview')[0].innerText);
@@ -49,14 +51,14 @@ function setPageBackgroundColor() {
     }
 
     function countLikes(review) {
+        // returns the number of thumbs up (this was helpful) of a given review
         let baseReviewValue = 0;
-
         var likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
-
         return baseReviewValue + (likes ? parseInt(likes[1]) : 0);
     }
 
     function peerScore(reviews) {
+        // returns the weighted average of the peer review valuation model
         var score = 0;
         var totalWeight = 0;
         let peerPower = 2;
@@ -77,10 +79,11 @@ function setPageBackgroundColor() {
         // calculate the definitive score of the course
         score = score / totalWeight;
 
-        return score.toFixed(1);
+        return score;
     }
 
     function getReviews(html) {
+        // returns the top 25 reviews in an array
         // Convert the HTML string into a document object
         var parser = new DOMParser();
         var doc = parser.parseFromString(html, 'text/html');
@@ -92,6 +95,7 @@ function setPageBackgroundColor() {
     }
 
     function getCourseraScore(){
+        // returns the official coursera valuation
         var score = document.getElementsByClassName('rating-text')[0].innerText;
         // return parseFloat(score);
         // for security we match the number in regex before parsing it
@@ -99,30 +103,44 @@ function setPageBackgroundColor() {
     }
 
     function getNumberRatings(){
+        // returns the total number of reviews of the course in coursera
         var count = document.querySelector('[data-test="ratings-count-without-asterisks"]').innerText;
         // we must remove the thousend comma separator
         return parseInt(count.replace(/,/g, ''));
     }
 
     function courseraScore(){
+        // debug func
         console.log(getCourseraScore());
         console.log(getNumberRatings());
     }
 
 
     function getCourseReviews(course) {
-
+        // we are strict with the url to simplify cases where the request
+        // is made from the very reviews page of the course
         fetch('https://www.coursera.org/learn/' + course + '/reviews').then(function(response) {
             // The API call was successful!
             return response.text();
         }).then(function(html) {
 
+            // the peer reviewed reviews get to decide 4 stars
+            let peerStars = 4/5;
+            // the rest depends on the agregate from coursera
+            let voxPopuliStars = 1 - peerStars;
+
+
             var reviews = getReviews(html);
-            var score = peerScore(reviews);
+            var score = peerStars * peerScore(reviews) + voxPopuliStars * getCourseraScore();
+
+            // round to one decimal place
+            score = score.toFixed(1);
 
 
             console.log('Real adjusted score of the course:', score);
             
+            // here will go the style modification
+            // we will make to the course valuation
 
 
         }).catch(function(err) {
