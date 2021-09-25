@@ -39,35 +39,45 @@ function setPageBackgroundColor() {
         return fullStars + (halfStars / 2);
     }
 
-    function countLikes(review) {
+    function getAgeOfReview(review){
+        // currently returns the age of the review in days since the Unix Epoch
+        let daysFactor = 1000 * 3600 * 24;
 
-        let baseReviewValue = 0;
-        let peerPower = 3 / 2;
+        var date = Date.parse(review.getElementsByClassName('dateOfReview')[0].innerText);
 
-
-        if (peerPower < 1) { peerPower = 1; }
-        // breaks if no one has liked the comment
-        var likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
-
-        return baseReviewValue + (likes ? parseInt(likes[1]) ** peerPower : 0);
+        return date / daysFactor;
     }
 
-    function calculateScore(reviews) {
+    function countLikes(review) {
+        let baseReviewValue = 0;
+
+        var likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
+
+        return baseReviewValue + (likes ? parseInt(likes[1]) : 0);
+    }
+
+    function peerScore(reviews) {
         var score = 0;
         var totalWeight = 0;
+        let peerPower = 2;
+        let timedecay = 0.3;
 
         reviews.forEach(review => {
             // console.log(countStars(review))
             // console.log(countLikes(review))
             // calculate the weighted average
-            score += countStars(review) * countLikes(review);
-            totalWeight += countLikes(review);
+
+            let peers = countLikes(review) ** peerPower
+            let time = getAgeOfReview(review) ** timedecay;
+
+            score += countStars(review) * peers * time;
+            totalWeight += peers * time;
         });
 
         // calculate the definitive score of the course
         score = score / totalWeight;
 
-        return score.toFixed(1)
+        return score.toFixed(1);
     }
 
     function getReviews(html) {
@@ -81,6 +91,24 @@ function setPageBackgroundColor() {
         return Array.from(reviews);
     }
 
+    function getCourseraScore(){
+        var score = document.getElementsByClassName('rating-text')[0].innerText;
+        // return parseFloat(score);
+        // for security we match the number in regex before parsing it
+        return parseFloat(score.match(/[\d\.]+/));
+    }
+
+    function getNumberRatings(){
+        var count = document.querySelector('[data-test="ratings-count-without-asterisks"]').innerText;
+        // we must remove the thousend comma separator
+        return parseInt(count.replace(/,/g, ''));
+    }
+
+    function courseraScore(){
+        console.log(getCourseraScore());
+        console.log(getNumberRatings());
+    }
+
 
     function getCourseReviews(course) {
 
@@ -90,9 +118,11 @@ function setPageBackgroundColor() {
         }).then(function(html) {
 
             var reviews = getReviews(html);
-            var score = calculateScore(reviews);
+            var score = peerScore(reviews);
+
 
             console.log('Real adjusted score of the course:', score);
+            
 
 
         }).catch(function(err) {
