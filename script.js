@@ -1,7 +1,11 @@
 // the hackiest solution I could find
 {
     var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: bottom;\' class="material-icons">verified</i>'
+
+    var tago = '<span style=\'display: inline-block\'>'
+    var tagc = '</span>'
     // var icon = '<i class="bi bi-patch-check"></i>'
+    function makeBadge(score) { return `&nbsp;${tago}(${score}${icon})${tagc}` }
 
     function zip(arrays) {
         return arrays[0].map(function(_, i) {
@@ -41,9 +45,9 @@
         return doc;
     }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
     // ------------------------------------- class Course
     class Course {
 
@@ -68,7 +72,7 @@ function sleep(ms) {
 
         displayResult() {
             this.score.then(x => {
-                if (x >= 0) { document.getElementsByClassName('rating-text')[0].innerHTML += ` (${x}${icon})` }
+                if (x >= 0) { document.getElementsByClassName('rating-text')[0].innerHTML += makeBadge(x) }
             })
         }
 
@@ -113,7 +117,7 @@ function sleep(ms) {
 
                 score += this.countStars(review) * peers * time;
                 totalWeight += peers * time;
-                console.log(totalWeight)
+                // console.log(totalWeight)
             });
 
             // calculate the definitive score of the course
@@ -233,7 +237,7 @@ function sleep(ms) {
                 for (var i = 0; i < scores.length; i++) {
                     if (scores[i] >= 0) {
                         // add the style
-                        cards[i].innerHTML += ` (${scores[i]}${icon})`;
+                        cards[i].innerHTML += makeBadge(scores[i]);
 
                         avg += parseFloat(scores[i])
                     }
@@ -312,7 +316,7 @@ function sleep(ms) {
 
                 for (let i = 0; i < this.names.length; i++) {
                     if (scores[i] >= 0) {
-                        cards[i].innerHTML += ` (${scores[i]}${icon})`;
+                        cards[i].innerHTML += makeBadge(scores[i]);
                         containers[i].style.width = 'unset';
                     }
                 }
@@ -359,6 +363,13 @@ function sleep(ms) {
         link.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
         // link.href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
         document.head.appendChild(link);
+
+        // prevents the added text from breaking the row of stars
+        var styles = `._1mzojlvw { white-space: nowrap; }`
+        var styleSheet = document.createElement("style")
+        styleSheet.type = "text/css"
+        styleSheet.innerText = styles
+        document.head.appendChild(styleSheet)
 
 
         // START entry point to the algorithm
