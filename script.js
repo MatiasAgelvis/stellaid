@@ -277,25 +277,14 @@
     class Search {
 
         constructor(doc) {
-            this.names = this.getSearchPageCourses(doc);
+            this.names = this.getResutlsPathnames(doc);
             this.courses = []
         }
 
         async Score() {
-            this.courses = this.names.map(x => new Course(x))
+            this.courses = this.names.map(discriminator)
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
             this.courses.forEach(x => x.Score())
-        }
-
-        getSearchPageCourses(doc) {
-            let results = Array.from(doc.getElementsByClassName('result-title-link'));
-
-            // turn array of a tags to their pathnames
-            let pathnames = results.map(x => x.pathname);
-            // console.log(pathnames)
-
-            // prepare path names
-            return pathnames.map(x => prepPathname(x)[1]);
         }
 
         prettylog() {
@@ -321,6 +310,13 @@
                     }
                 }
             })
+        }
+
+        getResutlsPathnames(doc) {
+            let results = Array.from(doc.getElementsByClassName('result-title-link'));
+
+            // turn array of a tags to their pathnames
+            return results.map(x => x.pathname);
         }
     }
 
