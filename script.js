@@ -23,18 +23,53 @@
 
     function prepPathname(pathname) { return [pathname.split('/')[1], pathname.split('/')[2]] }
 
+    async function fetchPage(...paths) {
+        // given a course name will return 
+        // the parsed doc of the review page for the course
+        let url = 'https://www.coursera.org/' + [...paths].join('/');
+        let response;
+        try {
+            response = await fetch(url);
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
 
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(await response.text(), 'text/html');
+
+        return doc;
+    }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+    // ------------------------------------- class Course
     class Course {
 
         constructor(name) {
             this.name = name
+            this.type = 'learn'
             this.score = null
             this.hasReviews = true
+            this.peerPower = 2;
+            this.timedecay = 0.3;
+            this.baseReviewValue = 2;
         }
 
-        async getScore() {
+        async Score() {
             this.score = this.getCourseScore(this.name);
             return this.score;
+        }
+
+        async prettylog() {
+            this.score.then(x => console.log(this.name, x))
+        }
+
+        displayResult() {
+            this.score.then(x => {
+                if (x >= 0) { document.getElementsByClassName('rating-text')[0].innerHTML += ` (${x}${icon})` }
+            })
         }
 
         countStars(review) {
@@ -56,9 +91,8 @@
 
         countLikes(review) {
             // returns the number of thumbs up (this was helpful) of a given review
-            let baseReviewValue = 0;
             let likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
-            return baseReviewValue + (likes ? parseInt(likes[1]) : 0);
+            return this.baseReviewValue + (likes ? parseInt(likes[1]) : 0);
         }
 
 
@@ -70,19 +104,16 @@
 
             let score = 0;
             let totalWeight = 0;
-            let peerPower = 2;
-            let timedecay = 0.3;
 
             reviews.forEach(review => {
-                // console.log(countStars(review))
-                // console.log(countLikes(review))
                 // calculate the score
 
-                let peers = this.countLikes(review) ** peerPower
-                let time = this.getAgeOfReview(review) ** timedecay;
+                let peers = this.countLikes(review) ** this.peerPower
+                let time = this.getAgeOfReview(review) ** this.timedecay;
 
                 score += this.countStars(review) * peers * time;
                 totalWeight += peers * time;
+                console.log(totalWeight)
             });
 
             // calculate the definitive score of the course
@@ -127,12 +158,12 @@
             this.hasReviews = !(doc.getElementsByClassName('review').length == 0 ||
                 doc.getElementsByClassName('dateOfReview').length == 0 ||
                 doc.getElementsByClassName('rating-text').length == 0)
-
+            console.log('this.hasReviews', this.name, this.hasReviews)
             return this.hasReviews
         }
 
-        async getCourseScore(course) {
-            let doc = await this.fetchReviewPage(course);
+        async getCourseScore() {
+            let doc = await fetchPage(this.type, this.name, 'reviews');
 
             if (!this.checkIfReviewed(doc)) { return -1 }
 
@@ -148,18 +179,97 @@
 
             return score;
         }
+    }
 
-        async prettylog() {
-            this.score.then(x => console.log(this.name, x))
-        }
-
-        displayResult() {
-            this.score.then(x => {
-        if (x >= 0) { document.getElementsByClassName('rating-text')[0].innerHTML += ` (${x}${icon})` }
-            })
+    // ------------------------------------- class Project
+    class Project extends Course {
+        constructor(name) {
+            super(name);
+            this.type = 'projects'
         }
     }
 
+    // ------------------------------------- class Specialization
+    class Specialization {
+        constructor(type, name) {
+            this.doc = fetchPage(this.type, this.name);
+            this.name = name
+            this.names = [];
+            this.type = type
+            this.courses = [];
+        }
+
+        async Score() {
+            this.names = this.getCoursesPathnames(await this.doc);
+            // TODO: add a structure similar to discriminator, or use the same function
+            this.courses = this.names.map(x => new Course(x))
+            // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
+            this.courses.forEach(x => x.Score())
+        }
+
+        async prettylog() {
+            // await this.Score()
+            await sleep(4000)
+            Promise.all(this.courses.map(x => x.score)).then((scores) => {
+
+                for (let i = 0; i < this.names.length; i++) {
+                    console.log(this.names[i], scores[i])
+                }
+            })
+        }
+
+        async displayResult() {
+            // await this.Score()
+            // we have to force the wait so that courses can get their own promises
+            // to actually block the execution with their own promises
+            await sleep(4000)
+
+            Promise.all(this.courses.map(x => x.score)).then((scores) => {
+
+                let cards = Array.from(document.getElementsByClassName('rating-text'))
+                let spec = cards.shift();
+
+                let avg = 0
+                for (var i = 0; i < scores.length; i++) {
+                    if (scores[i] >= 0) {
+                        // add the style
+                        cards[i].innerHTML += ` (${scores[i]}${icon})`;
+
+                        avg += parseFloat(scores[i])
+                    }
+                }
+
+                // give final rating
+                avg = (avg / scores.length).toFixed(1);
+                spec.innerHTML += ` (${avg}${icon})`;
+            })
+        }
+
+        getCoursesPathnames(doc) {
+            // display all courses, inly works when we are in the window
+            let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
+
+
+            if (window.location.pathname == `/${this.type}/${this.name}`) {
+
+                if (document.querySelector('button.d-block').innerText == 'Show More') {
+                    document.querySelector('button.d-block').click();
+                }
+
+                // await new Promise(r => setTimeout(r, 2000));
+                results = Array.from(document.querySelectorAll('[data-e2e="course-link"]'));
+            }
+
+            // turn array of a tags to their pathnames
+            let pathnames = results.map(x => x.pathname);
+            // console.log(pathnames)
+
+            // prepare path names
+            return pathnames.map(x => prepPathname(x)[1]);
+        }
+    }
+
+    // ------------------------------------- class Search
     class Search {
 
         constructor(doc) {
@@ -167,10 +277,10 @@
             this.courses = []
         }
 
-        async getScores() {
+        async Score() {
             this.courses = this.names.map(x => new Course(x))
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
-            this.courses.forEach(x => x.getScore())
+            this.courses.forEach(x => x.Score())
         }
 
         getSearchPageCourses(doc) {
@@ -193,7 +303,7 @@
             })
         }
 
-        displayResults() {
+        displayResult() {
             Promise.all(this.courses.map(x => x.score)).then((scores) => {
 
                 let cards = document.getElementsByClassName('ratings-text');
@@ -202,52 +312,40 @@
 
                 for (let i = 0; i < this.names.length; i++) {
                     if (scores[i] >= 0) {
-                    cards[i].innerHTML += ` (${scores[i]}${icon})`;
-                    containers[i].style.width = 'unset';
+                        cards[i].innerHTML += ` (${scores[i]}${icon})`;
+                        containers[i].style.width = 'unset';
                     }
                 }
             })
         }
     }
 
+    function discriminator(pathname) {
+        [type, name] = prepPathname(pathname);
 
-    function discriminator(type, name) {
-
-        console.log('entry type: ', type);
-        console.log('entry name: ', name);
-
-        let X;
-        // check if we are in a search or in the page of a course
         switch (type) {
             case 'search':
             case 'courses':
-                // console.log('search', search_func)
-                // if we are in a search page we then document has all the data we need
-                X = new Search(document);
-                X.getScores();
-                X.prettylog();
-                X.displayResults();
+                return new Search(document);
                 break;
             case 'learn':
-                // COURSE, base case
-                X = new Course(name)
-                X.getScore();
-                X.prettylog();
-                X.displayResult();
+                return new Course(name);
                 break;
-
             case 'professional-certificates':
             case 'specializations':
-                console.log('this is a specialization or professional-certificate page, implementation comming soon');
-                // professional certificates consist of several courses
-                // must score them all and average
+                return new Specialization(type, name);
                 break;
-
+            case 'projects':
+                return new Project(name);
+                break;
+            case 'instructor':
+                return new Instructor();
+                break;
             default:
-                console.log('Deafult case');
+                console.error(`Unknown type: ${type} is not registered.`)
+                return null;
         }
     }
-
 
     // The body of this function will be execuetd as a content script inside the
     // current page
@@ -264,7 +362,11 @@
 
 
         // START entry point to the algorithm
-        discriminator(...prepPathname(window.location.pathname));
+        let X = discriminator(window.location.pathname);
+
+        X.Score();
+        X.prettylog();
+        X.displayResult();
     }
 
     main();
