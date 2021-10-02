@@ -30,7 +30,12 @@
     async function fetchPage(...paths) {
         // given a course name will return 
         // the parsed doc of the review page for the course
-        let url = 'https://www.coursera.org/' + [...paths].join('/');
+        let pathname = '/' + [...paths].join('/')
+        let url = 'https://www.coursera.org' + pathname;
+
+        // prevents fetching of the current document
+        if (pathname == document.location.pathname) { return document }
+
         let response;
         try {
             response = await fetch(url);
@@ -54,7 +59,7 @@
         constructor(name) {
             this.name = name
             this.type = 'learn'
-            this.score = null
+            this.score = sleep(999999999999)
             this.hasReviews = true
             this.peerPower = 2;
             this.timedecay = 0.3;
@@ -198,9 +203,10 @@
         constructor(type, name) {
             this.doc = fetchPage(this.type, this.name);
             this.name = name
-            this.names = [];
+            this.names = sleep(999999999999);
             this.type = type
-            this.courses = [];
+            this.courses = sleep(999999999999);
+            this.score = sleep(999999999999);
         }
 
         async Score() {
@@ -209,11 +215,21 @@
             this.courses = this.names.map(x => new Course(x))
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
             this.courses.forEach(x => x.Score())
+
+            await Promise.all(this.courses.map(x => x.score)).then((scores) => {
+                let sum = 0
+                let count = 0;
+                for (var i = 0; i < scores.length; i++) {
+                    if (scores[i] >= 0) { sum += parseFloat(scores[i]); count += 1 }
+                }
+                // give final rating
+                this.score = (sum / count).toFixed(1);
+            })
         }
 
         async prettylog() {
             // await this.Score()
-            await sleep(4000)
+            // await sleep(4000)
             Promise.all(this.courses.map(x => x.score)).then((scores) => {
 
                 for (let i = 0; i < this.names.length; i++) {
@@ -226,26 +242,23 @@
             // await this.Score()
             // we have to force the wait so that courses can get their own promises
             // to actually block the execution with their own promises
-            await sleep(4000)
+            // await sleep(4000)
 
-            Promise.all(this.courses.map(x => x.score)).then((scores) => {
+            Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
 
                 let cards = Array.from(document.getElementsByClassName('rating-text'))
                 let spec = cards.shift();
+                let scores = scoresFilter.filter( function (x) {return x >= 0} )
 
-                let avg = 0
                 for (var i = 0; i < scores.length; i++) {
                     if (scores[i] >= 0) {
                         // add the style
                         cards[i].innerHTML += makeBadge(scores[i]);
-
-                        avg += parseFloat(scores[i])
                     }
                 }
 
                 // give final rating
-                avg = (avg / scores.length).toFixed(1);
-                spec.innerHTML += ` (${avg}${icon})`;
+                spec.innerHTML += makeBadge(this.score);
             })
         }
 
@@ -254,10 +267,11 @@
             let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
 
 
-            if (window.location.pathname == `/${this.type}/${this.name}`) {
+            if (document.location.pathname == `/${this.type}/${this.name}`) {
 
-                if (document.querySelector('button.d-block').innerText == 'Show More') {
+                while (document.querySelector('button.d-block').innerText == 'Show More') {
                     document.querySelector('button.d-block').click();
+                    sleep(100)
                 }
 
                 // await new Promise(r => setTimeout(r, 2000));
@@ -285,6 +299,7 @@
             this.courses = this.names.map(discriminator)
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
             this.courses.forEach(x => x.Score())
+            await Promise.all(this.courses.map(x => x.score));
         }
 
         prettylog() {
@@ -296,14 +311,18 @@
             })
         }
 
-        displayResult() {
-            Promise.all(this.courses.map(x => x.score)).then((scores) => {
+        async displayResult() {
+            await sleep(10000)
+            Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
 
                 let cards = document.getElementsByClassName('ratings-text');
                 // let containers = document.getElementsByClassName('rc-Ratings')
                 let containers = document.getElementsByClassName('ratings-icon')
 
-                for (let i = 0; i < this.names.length; i++) {
+                // remove courses not reviewd, they dont have a matching value in cards
+                let scores = scoresFilter.filter( function (x) {return x >= 0} )
+
+                for (let i = 0; i < cards.length; i++) {
                     if (scores[i] >= 0) {
                         cards[i].innerHTML += makeBadge(scores[i]);
                         containers[i].style.width = 'unset';
@@ -371,7 +390,7 @@
         // START entry point to the algorithm
         let X = discriminator(window.location.pathname);
 
-        X.Score();
+        await X.Score();
         X.prettylog();
         X.displayResult();
     }
