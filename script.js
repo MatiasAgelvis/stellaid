@@ -68,7 +68,6 @@
 
         async Score() {
             this.score = this.getCourseScore(this.name);
-            return this.score;
         }
 
         async prettylog() {
@@ -103,7 +102,6 @@
             let likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
             return this.baseReviewValue + (likes ? parseInt(likes[1]) : 0);
         }
-
 
         peerScore(doc) {
             // returns the weighted average of the peer review valuation model
@@ -146,23 +144,6 @@
             return parseInt(total.replace(/,/g, ''));
         }
 
-        async fetchReviewPage(course) {
-            // given a course name will return 
-            // the parsed doc of the review page for the course
-            let response;
-            try {
-                response = await fetch('https://www.coursera.org/learn/' + course + '/reviews');
-            } catch (error) {
-                console.error(error);
-                return null;
-            }
-
-            let parser = new DOMParser();
-            let doc = parser.parseFromString(await response.text(), 'text/html');
-
-            return doc;
-        }
-
         checkIfReviewed(doc) {
             this.hasReviews = !(doc.getElementsByClassName('review').length == 0 ||
                 doc.getElementsByClassName('dateOfReview').length == 0 ||
@@ -201,22 +182,22 @@
     // ------------------------------------- class Specialization
     class Specialization {
         constructor(type, name) {
-            this.doc = fetchPage(this.type, this.name);
             this.name = name
-            this.names = sleep(999999999999);
             this.type = type
+            this.names = sleep(999999999999);
             this.courses = sleep(999999999999);
             this.score = sleep(999999999999);
+            this.doc = fetchPage(this.type, this.name);
         }
 
         async Score() {
-            this.names = this.getCoursesPathnames(await this.doc);
+            this.names = await this.getCoursesPathnames(await this.doc);
             // TODO: add a structure similar to discriminator, or use the same function
             this.courses = this.names.map(x => new Course(x))
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
             this.courses.forEach(x => x.Score())
 
-            await Promise.all(this.courses.map(x => x.score)).then((scores) => {
+            Promise.all(this.courses.map(x => x.score)).then((scores) => {
                 let sum = 0
                 let count = 0;
                 for (var i = 0; i < scores.length; i++) {
@@ -262,17 +243,20 @@
             })
         }
 
-        getCoursesPathnames(doc) {
+        async getCoursesPathnames(doc) {
             // display all courses, inly works when we are in the window
             let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
 
-
+            let count = 0
             if (document.location.pathname == `/${this.type}/${this.name}`) {
 
-                while (document.querySelector('button.d-block').innerText == 'Show More') {
+                while (document.querySelector('button.d-block').innerText == 'Show More' 
+                       && count < 20) {
                     document.querySelector('button.d-block').click();
                     sleep(100)
+                    count++
                 }
+                console.log(count)
 
                 // await new Promise(r => setTimeout(r, 2000));
                 results = Array.from(document.querySelectorAll('[data-e2e="course-link"]'));
@@ -292,17 +276,17 @@
 
         constructor(doc) {
             this.names = this.getResutlsPathnames(doc);
-            this.courses = []
+            this.courses = this.names.map(discriminator)
         }
 
         async Score() {
-            this.courses = this.names.map(discriminator)
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
             this.courses.forEach(x => x.Score())
             await Promise.all(this.courses.map(x => x.score));
         }
 
-        prettylog() {
+        async prettylog() {
+            await sleep(10000)
             Promise.all(this.courses.map(x => x.score)).then((scores) => {
 
                 for (let i = 0; i < this.names.length; i++) {
