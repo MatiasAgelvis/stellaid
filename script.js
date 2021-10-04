@@ -246,11 +246,11 @@
             })
         }
 
-        async displayResult() { 
+        async displayResult() {
             this.score.then((score) => {
                 let cards = Array.from(this.doc.getElementsByClassName('rating-text'))
                 let spec = cards.shift();
-                
+
                 spec.innerHTML += makeBadge(score);
 
                 Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
@@ -271,13 +271,10 @@
             let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
             let showButton = doc.querySelector('button.d-block');
 
-            let count = 0
-            while (showButton.innerText == 'Show More' && count < 200) {
+            if (showButton.innerText == 'Show More') {
                 await sleep(100)
                 showButton.click();
-                count++
             }
-            console.log(count)
 
             // await new Promise(r => setTimeout(r, 2000));
             results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
@@ -307,7 +304,6 @@
         }
 
         async prettylog() {
-            // await sleep(10000)
             Promise.all(this.courses.map(x => x.score)).then((scores) => {
 
                 for (let i = 0; i < this.names.length; i++) {
@@ -317,43 +313,20 @@
         }
 
         async displayResult() {
-            // await sleep(10000)
-
-            // Array.from(document.getElementsByClassName('result-title-link')).map(x => x.getElementsByClassName('ratings-text')[0] === undefined)
             var self = this;
-            searchCSSmod();
 
-            // for (var i = 0; i < this.results.length; i++) {
             this.results.forEach((result, i) => {
-                self.courses[i].score.then((score) => {
-                    if (result.getElementsByClassName('ratings-text')[0] !== undefined) {
+
+
+                if (result.getElementsByClassName('ratings-text')[0] !== undefined) {
+                    result.getElementsByClassName('ratings-icon')[0].style.width = 'unset';
+                    this.courses[i].score.then((score) => {
                         if (score >= 0) {
                             result.getElementsByClassName('ratings-text')[0].innerHTML += makeBadge(score);
-                            // containers[i].style.width = 'unset';
                         }
-                    }
-                })
+                    })
+                }
             })
-            // }
-
-            // Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
-
-            //     let cards = document.getElementsByClassName('ratings-text');
-            //     // let containers = document.getElementsByClassName('rc-Ratings')
-            //     let containers = document.getElementsByClassName('ratings-icon')
-
-            //     // remove courses not reviewd, they dont have a matching value in cards
-            //     let scores = scoresFilter.filter(function(x) { return x >= 0 })
-
-            //     for (let i = 0; i < cards.length; i++) {
-            //         if (scores[i] >= 0) {
-            //             cards[i].innerHTML += makeBadge(scores[i]);
-            //             containers[i].style.width = 'unset';
-            //         }
-            //     }
-            // })
-
-
         }
     }
 
@@ -406,7 +379,7 @@
 
 
         // START entry point to the algorithm
-        let X = discriminator(window.location.pathname);
+        let X = discriminator(document.location.pathname);
 
         // await X.Score();
         X.prettylog();
