@@ -40,14 +40,21 @@
 
     function prepPathname(pathname) { return [pathname.split('/')[1], pathname.split('/')[2]] }
 
+    function joinPaths(...paths) { return '/' + [...paths].join('/') }
+
+    function isCurrentFile(pathname) {
+        return pathname == document.location.pathname
+    }
+
     async function fetchPage(...paths) {
         // given a course name will return 
         // the parsed doc of the review page for the course
-        let pathname = '/' + [...paths].join('/')
+        
+        let pathname = joinPaths(...paths)
         let url = 'https://www.coursera.org' + pathname;
 
         // prevents fetching of the current document
-        if (pathname == document.location.pathname) { return document }
+        if (isCurrentFile(pathname)) { return document }
 
         let response;
         try {
@@ -271,7 +278,11 @@
             let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
             let showButton = doc.querySelector('button.d-block');
 
-            if (showButton.innerText == 'Show More') {
+            // to improve speed in search pages the whole list of courses
+            // will only be taken into account at the specialization page
+            // either way the script that reveals the whole list was not loading in time
+            if (showButton && showButton.innerText == 'Show More' && 
+                isCurrentFile(joinPaths(this.type, this.name))) {
                 await sleep(100)
                 showButton.click();
             }
