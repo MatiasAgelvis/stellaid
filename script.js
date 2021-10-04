@@ -201,10 +201,13 @@
                 let sum = 0
                 let count = 0;
                 for (var i = 0; i < scores.length; i++) {
-                    if (scores[i] >= 0) { sum += parseFloat(scores[i]); count += 1 }
+                    if (scores[i] >= 0) {
+                        sum += parseFloat(scores[i]);
+                        count += 1
+                    }
                 }
                 // give final rating
-                this.score = (sum / count).toFixed(1);
+                this.score = sum > 0 ? (sum / count).toFixed(1) : -1;
             })
         }
 
@@ -229,7 +232,7 @@
 
                 let cards = Array.from(document.getElementsByClassName('rating-text'))
                 let spec = cards.shift();
-                let scores = scoresFilter.filter( function (x) {return x >= 0} )
+                let scores = scoresFilter.filter(function(x) { return x >= 0 })
 
                 for (var i = 0; i < scores.length; i++) {
                     if (scores[i] >= 0) {
@@ -248,19 +251,17 @@
             let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
 
             let count = 0
-            if (document.location.pathname == `/${this.type}/${this.name}`) {
 
-                while (document.querySelector('button.d-block').innerText == 'Show More' 
-                       && count < 20) {
-                    document.querySelector('button.d-block').click();
-                    sleep(100)
-                    count++
-                }
-                console.log(count)
-
-                // await new Promise(r => setTimeout(r, 2000));
-                results = Array.from(document.querySelectorAll('[data-e2e="course-link"]'));
+            while (this.doc.querySelector('button.d-block').innerText == 'Show More' &&
+                count < 50) {
+                this.doc.querySelector('button.d-block').click();
+                await sleep(100)
+                count++
             }
+            console.log(count)
+
+            // await new Promise(r => setTimeout(r, 2000));
+            results = Array.from(document.querySelectorAll('[data-e2e="course-link"]'));
 
             // turn array of a tags to their pathnames
             let pathnames = results.map(x => x.pathname);
@@ -275,7 +276,8 @@
     class Search {
 
         constructor(doc) {
-            this.names = this.getResutlsPathnames(doc);
+            this.results = Array.from(doc.getElementsByClassName('result-title-link'))
+            this.names = this.results.map(x => x.pathname);
             this.courses = this.names.map(discriminator)
         }
 
@@ -286,7 +288,7 @@
         }
 
         async prettylog() {
-            await sleep(10000)
+            // await sleep(10000)
             Promise.all(this.courses.map(x => x.score)).then((scores) => {
 
                 for (let i = 0; i < this.names.length; i++) {
@@ -296,7 +298,26 @@
         }
 
         async displayResult() {
-            await sleep(10000)
+            // await sleep(10000)
+
+            // Array.from(document.getElementsByClassName('result-title-link')).map(x => x.getElementsByClassName('ratings-text')[0] === undefined)
+
+            let foo = Array.from(document.getElementsByClassName('result-title-link'));
+
+
+            for (var i = 0; i < foo.length; i++) {
+                this.courses[i].score.then((score) => {
+                    if (foo[i].getElementsByClassName('ratings-text')[0] !== undefined) {
+                        if (score >= 0) {
+                            foo[i].getElementsByClassName('ratings-text')[0].innerHTML += makeBadge(score);
+                            // containers[i].style.width = 'unset';
+                        }
+                    }
+                });
+            }
+
+
+
             Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
 
                 let cards = document.getElementsByClassName('ratings-text');
@@ -304,7 +325,7 @@
                 let containers = document.getElementsByClassName('ratings-icon')
 
                 // remove courses not reviewd, they dont have a matching value in cards
-                let scores = scoresFilter.filter( function (x) {return x >= 0} )
+                let scores = scoresFilter.filter(function(x) { return x >= 0 })
 
                 for (let i = 0; i < cards.length; i++) {
                     if (scores[i] >= 0) {
@@ -313,13 +334,6 @@
                     }
                 }
             })
-        }
-
-        getResutlsPathnames(doc) {
-            let results = Array.from(doc.getElementsByClassName('result-title-link'));
-
-            // turn array of a tags to their pathnames
-            return results.map(x => x.pathname);
         }
     }
 
