@@ -1,4 +1,4 @@
-// the hackiest solution I could find
+// Wraps the whole script in a closure in case the extension is called more than once
 {
     var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: bottom;\' class="material-icons">verified</i>'
 
@@ -8,7 +8,7 @@
     function makeBadge(score) { return `&nbsp;${tago}(${score}${icon})${tagc}` }
 
     function searchCSSmod() {
-        // prevents the making the flex container of the orginal rating stars 
+        // prevents the making the flex container of the original rating stars 
         // from becoming too wide when text is added
         var styles = `.ratings-icon { width = unset; }`
         var styleSheet = document.createElement("style")
@@ -161,7 +161,7 @@
         getNumberRatings(doc) {
             // returns the total number of reviews of the course in coursera
             let total = doc.querySelector('[data-test="ratings-count-without-asterisks"]').innerText;
-            // we must remove the thousend comma separator
+            // we must remove the thousand comma separator
             return parseInt(total.replace(/,/g, ''));
         }
 
@@ -180,7 +180,7 @@
 
             // the peer reviewed reviews get to decide 4 stars
             let peerStars = 4 / 5;
-            // the rest depends on the agregate from coursera
+            // the rest depends on the aggregate from coursera
             let voxPopuliStars = 1 - peerStars;
 
             let score = peerStars * this.peerScore(doc) + voxPopuliStars * this.getCourseraScore(doc);
@@ -368,7 +368,7 @@
         }
     }
 
-    // The body of this function will be execuetd as a content script inside the
+    // The body of this function will be executed as a content script inside the
     // current page
     async function main() {
         // let url = window.location.toString()
