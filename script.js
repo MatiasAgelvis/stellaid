@@ -212,6 +212,7 @@
         }
 
         async initializer() {
+            // this async function finishes the construction
             this.doc = await this.doc
             this.names = await this.getCoursesPathnames(this.doc)
             this.courses = this.names.map(x => new Course(x))
@@ -221,10 +222,6 @@
             await this.initializer()
 
             let score = 0
-            // TODO: add a structure similar to discriminator, or use the same function
-            // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
-            // this.courses.forEach(x => x.Score())
-
             let sum = 0
             let count = 0
 
@@ -235,7 +232,6 @@
                         count += 1
                     }
                 }
-                // give final rating
             })
 
             return sum > 0 ? (sum / count).toFixed(1) : -1;
@@ -260,12 +256,13 @@
 
                 spec.innerHTML += makeBadge(score);
 
+                // all these promises must be fulfilled by now, Promise.all is just an
+                // alternative to iterate over all courses
                 Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
-
+                    // Remove courses not reviwed for they don't have a related card
                     let scores = scoresFilter.filter(function(x) { return x >= 0 })
                     for (var i = 0; i < scores.length; i++) {
                         if (scores[i] >= 0) {
-                            // add the style
                             cards[i].innerHTML += makeBadge(scores[i]);
                         }
                     }
@@ -324,10 +321,7 @@
         }
 
         async displayResult() {
-            var self = this;
-
             this.results.forEach((result, i) => {
-
 
                 if (result.getElementsByClassName('ratings-text')[0] !== undefined) {
                     result.getElementsByClassName('ratings-icon')[0].style.width = 'unset';

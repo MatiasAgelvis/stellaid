@@ -5,6 +5,13 @@ button {
   margin: 10px;
   border: none;
   border-radius: 2px;
+  background-color: white;
+  background-image: url("images/verified_48.png");
+  background-size: contain;
+}
+
+button:hover {
+  border-radius: 0;
 }
 
 button.current {
