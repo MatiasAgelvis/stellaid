@@ -2,7 +2,7 @@
 {
     function extensionBadge(msg){
         chrome.runtime.sendMessage({ text: msg }, function(response) {
-            console.log("Response: ", response);
+            console.log("Badge Text: ", response);
         })
     }
 
