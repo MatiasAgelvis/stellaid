@@ -1,5 +1,13 @@
 // Wraps the whole script in a closure in case the extension is called more than once
 {
+    function extensionBadge(msg){
+        chrome.runtime.sendMessage({ text: msg }, function(response) {
+            console.log("Response: ", response);
+        })
+    }
+
+    extensionBadge('Wait')
+
     var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: bottom;\' class="material-icons">verified</i>'
 
     var tago = '<span style=\'display: inline-block\'>'
@@ -49,7 +57,7 @@
     async function fetchPage(...paths) {
         // given a course name will return 
         // the parsed doc of the review page for the course
-        
+
         let pathname = joinPaths(...paths)
         let url = 'https://www.coursera.org' + pathname;
 
@@ -98,6 +106,7 @@
         displayResult() {
             this.score.then(x => {
                 if (x >= 0) { document.getElementsByClassName('rating-text')[0].innerHTML += makeBadge(x) }
+                extensionBadge('Done');
             })
         }
 
@@ -267,6 +276,8 @@
                         }
                     }
                 })
+
+                extensionBadge('Done');
             })
         }
 
@@ -278,7 +289,7 @@
             // to improve speed in search pages the whole list of courses
             // will only be taken into account at the specialization page
             // either way the script that reveals the whole list was not loading in time
-            if (showButton && showButton.innerText == 'Show More' && 
+            if (showButton && showButton.innerText == 'Show More' &&
                 isCurrentFile(joinPaths(this.type, this.name))) {
                 await sleep(100)
                 showButton.click();
@@ -317,6 +328,8 @@
                 for (let i = 0; i < this.names.length; i++) {
                     console.log(this.names[i], scores[i])
                 }
+
+                extensionBadge('Done');
             })
         }
 
@@ -391,6 +404,5 @@
         X.displayResult();
     }
 
-    main();
-
+    main()
 }
