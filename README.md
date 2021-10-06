@@ -14,6 +14,6 @@ You can use it anywhere where you see ⭐ star ratings ⭐ in Coursera:
 ### In a SEARCH!
 ![Coursera Advisor in a search](images/chrome/search.png)
 ### In an specialization
-![Coursera Advisor in a speciaization_top](images/chrome/speciaization_top.png)
+![Coursera Advisor in a specialization_top](images/chrome/specialization_top.png)
 ### it will even review all the courses in one go
-![Coursera Advisor in a speciaization_courses](images/chrome/speciaization_courses.png)
+![Coursera Advisor in a specialization_courses](images/chrome/specialization_courses.png)
