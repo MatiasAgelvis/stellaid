@@ -1,5 +1,6 @@
 # ![Coursera Advisor logo](images/logo_48.png) Coursera Advisor
 
+[![Get the Coursera Advisor for Chromium](https://chrome.google.com/webstore/detail/coursera-advisor/ijngbiifjeekcehmaigplbokedchligo?hl=en)](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/mPGKYBIR2uCP0ApchDXE.png)
 
 [![CodeFactor](https://www.codefactor.io/repository/github/matiasagelvis/courseraadvisor/badge)](https://www.codefactor.io/repository/github/matiasagelvis/courseraadvisor)
 
