@@ -1,6 +1,6 @@
 // Wraps the whole script in a closure in case the extension is called more than once
 {
-    function extensionBadge(msg){
+    function extensionBadge(msg) {
         chrome.runtime.sendMessage({ text: msg }, function(response) {
             console.log("Badge Text: ", response);
         })
@@ -10,7 +10,9 @@
 
     var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: bottom;\' class="material-icons">verified</i>'
 
+    // tag Open
     var tago = '<span style=\'display: inline-block\'>'
+    // tag Close
     var tagc = '</span>'
     // var icon = '<i class="bi bi-patch-check"></i>'
     function makeBadge(score) { return `&nbsp;${tago}(${score}${icon})${tagc}` }
@@ -79,6 +81,7 @@
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
+
     // ------------------------------------- class Course
     class Course {
 
@@ -86,18 +89,24 @@
             this.name = name
             this.type = 'learn'
             this.printTo = 'rating-text'
+            this.alreadyVerified = false
             this.hasReviews = true
-            this.peerPower = 2;
-            this.timedecay = 0.3;
-            this.baseReviewValue = 2;
-            this.score = this.Score();
+            this.peerPower = 2
+            this.timedecay = 0.3
+            this.baseReviewValue = 2
+            this.score = this.Score()
         }
 
         async Score() {
-            let regex = /.*?\((\d\.?\d)verified\)/;
-            let ScoreText = document.getElementsByClassName(this.printTo)[0].innerHTML
+            let regex = /.*?\((\d\.?\d)verified\)/
+            let ScoreText = document.getElementsByClassName(this.printTo)[0].innerText
 
-            return regex.test(ScoreText) ? parseFloat(regex.exec(ScoreText)[1]) : this.getCourseScore(this.name)
+            this.alreadyVerified = regex.test(ScoreText)
+            console.debug(this.alreadyVerified)
+            console.log('HIIIIIII')
+
+            // if the score was already written just read it from the document
+            return this.alreadyVerified ? parseFloat(regex.exec(ScoreText)[1]) : this.getCourseScore(this.name)
         }
 
         async prettylog() {
@@ -106,7 +115,9 @@
 
         displayResult() {
             this.score.then(x => {
-                if (x >= 0) { document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x) }
+                if (x >= 0 && !this.alreadyVerified) {
+                    document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x)
+                }
                 extensionBadge('Done');
             })
         }
@@ -217,6 +228,7 @@
             this.type = type
             this.names = null
             this.courses = null
+            this.alreadyVerified = false
             this.printTo = 'rating-text'
             this.doc = fetchPage(this.type, this.name);
             this.score = this.Score();
@@ -265,7 +277,13 @@
                 let cards = Array.from(this.doc.getElementsByClassName(this.printTo))
                 let spec = cards.shift();
 
-                spec.innerHTML += makeBadge(score);
+                // if the specialization has not been reviewed already
+                // don't write the score
+                let regex = /.*?\((\d\.?\d)verified\)/
+                if (!regex.test(spec.innerText)){
+                    spec.innerHTML += makeBadge(score);
+                }
+
 
                 // all these promises must be fulfilled by now, Promise.all is just an
                 // alternative to iterate over all courses
