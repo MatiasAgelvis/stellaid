@@ -85,6 +85,7 @@
         constructor(name) {
             this.name = name
             this.type = 'learn'
+            this.printTo = 'rating-text'
             this.hasReviews = true
             this.peerPower = 2;
             this.timedecay = 0.3;
@@ -94,7 +95,7 @@
 
         async Score() {
             let regex = /.*?\((\d\.?\d)verified\)/;
-            let ScoreText = document.getElementsByClassName('rating-text')[0].innerHTML
+            let ScoreText = document.getElementsByClassName(this.printTo)[0].innerHTML
 
             return regex.test(ScoreText) ? parseFloat(regex.exec(ScoreText)[1]) : this.getCourseScore(this.name)
         }
@@ -105,7 +106,7 @@
 
         displayResult() {
             this.score.then(x => {
-                if (x >= 0) { document.getElementsByClassName('rating-text')[0].innerHTML += makeBadge(x) }
+                if (x >= 0) { document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x) }
                 extensionBadge('Done');
             })
         }
@@ -216,6 +217,7 @@
             this.type = type
             this.names = null
             this.courses = null
+            this.printTo = 'rating-text'
             this.doc = fetchPage(this.type, this.name);
             this.score = this.Score();
         }
@@ -260,7 +262,7 @@
 
         async displayResult() {
             this.score.then((score) => {
-                let cards = Array.from(this.doc.getElementsByClassName('rating-text'))
+                let cards = Array.from(this.doc.getElementsByClassName(this.printTo))
                 let spec = cards.shift();
 
                 spec.innerHTML += makeBadge(score);
@@ -314,6 +316,7 @@
             this.results = Array.from(doc.getElementsByClassName('result-title-link'));
             this.names = this.results.map(x => x.pathname);
             this.courses = this.names.map(discriminator)
+            this.printTo = 'ratings-text'
         }
 
         async Score() {
@@ -336,11 +339,11 @@
         async displayResult() {
             this.results.forEach((result, i) => {
 
-                if (result.getElementsByClassName('ratings-text')[0] !== undefined) {
+                if (result.getElementsByClassName(this.printTo)[0] !== undefined) {
                     result.getElementsByClassName('ratings-icon')[0].style.width = 'unset';
                     this.courses[i].score.then((score) => {
                         if (score >= 0) {
-                            result.getElementsByClassName('ratings-text')[0].innerHTML += makeBadge(score);
+                            result.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(score);
                         }
                     })
                 }
