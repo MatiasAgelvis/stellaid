@@ -36,7 +36,6 @@
         return array[array.length - 1];
     }
 
-
     function regexCount(str, pattern) {
         // returns the number of marches of a pattern in a string
         let re = RegExp(pattern, 'g')
@@ -44,7 +43,6 @@
     }
 
     const promisify = f => (...args) => new Promise((res, rej) => f(...args, (err, data) => err ? rej(err) : res(data)));
-
 
     function prepPathname(pathname) { return [pathname.split('/')[1], pathname.split('/')[2]] }
 
@@ -95,8 +93,10 @@
         }
 
         async Score() {
-            return this.getCourseScore(this.name);
+            let regex = /.*?\((\d\.?\d)verified\)/;
+            let ScoreText = document.getElementsByClassName('rating-text')[0].innerHTML
 
+            return regex.test(ScoreText) ? parseFloat(regex.exec(ScoreText)[1]) : this.getCourseScore(this.name)
         }
 
         async prettylog() {
