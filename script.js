@@ -2,7 +2,7 @@
 {
     function extensionBadge(msg) {
         chrome.runtime.sendMessage({ text: msg }, function(response) {
-            console.log("Badge Text: ", response);
+            console.log("Badge Text: ", response)
         })
     }
 
@@ -32,12 +32,12 @@
     function zip(arrays) {
         return arrays[0].map(function(_, i) {
             return arrays.map(function(array) { return array[i] })
-        });
+        })
     }
 
     function last(array) {
         // returns the last element of the given array
-        return array[array.length - 1];
+        return array[array.length - 1]
     }
 
     function regexCount(str, pattern) {
@@ -46,7 +46,7 @@
         return ((str || '').match(re) || []).length
     }
 
-    const promisify = f => (...args) => new Promise((res, rej) => f(...args, (err, data) => err ? rej(err) : res(data)));
+    const promisify = f => (...args) => new Promise((res, rej) => f(...args, (err, data) => err ? rej(err) : res(data)))
 
     function prepPathname(pathname) { return [pathname.split('/')[1], pathname.split('/')[2]] }
 
@@ -61,23 +61,23 @@
         // the parsed doc of the review page for the course
 
         let pathname = joinPaths(...paths)
-        let url = 'https://www.coursera.org' + pathname;
+        let url = 'https://www.coursera.org' + pathname
 
         // prevents fetching of the current document
         if (isCurrentFile(pathname)) { return document }
 
-        let response;
+        let response
         try {
-            response = await fetch(url);
+            response = await fetch(url)
         } catch (error) {
-            console.error(error);
-            return null;
+            console.error(error)
+            return null
         }
 
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(await response.text(), 'text/html');
+        let parser = new DOMParser()
+        let doc = parser.parseFromString(await response.text(), 'text/html')
 
-        return doc;
+        return doc
     }
 
     function sleep(ms) {
@@ -102,13 +102,17 @@
         async Score() {
             let regex = badgeRegex
             let scoreHTML = document.getElementsByClassName(this.printTo)
-
-            if (scoreHTML.length > 0) { this.alreadyVerified = regex.test(scoreHTML[0].innerText) }
-
-            console.debug(this.alreadyVerified)
+            
+            // if whe are in a page where the course scores are given by the this.printTo
+            if (scoreHTML.length > 0) { 
+                let scoreText = scoreHTML[0].innerText
+                this.alreadyVerified = regex.test(scoreText)
+                console.debug(this.alreadyVerified)
+                return parseFloat(regex.exec(scoreText)[1])
+            }
 
             // if the score was already written just read it from the document
-            return this.alreadyVerified ? parseFloat(regex.exec(ScoreText)[1]) : this.getCourseScore(this.name)
+            return this.getCourseScore(this.name)
         }
 
         async prettylog() {
@@ -120,72 +124,72 @@
                 if (x >= 0 && !this.alreadyVerified) {
                     document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x)
                 }
-                extensionBadge('Done');
+                extensionBadge('Done')
             })
         }
 
         countStars(review) {
             // returns the number of stars given by the reviewer
-            let fullStars = regexCount(review.innerHTML, '<title .*?>Filled Star</title>');
-            let halfStars = regexCount(review.innerHTML, '<title .*?>Half Star</title>');
+            let fullStars = regexCount(review.innerHTML, '<title .*?>Filled Star</title>')
+            let halfStars = regexCount(review.innerHTML, '<title .*?>Half Star</title>')
 
-            return fullStars + (halfStars / 2);
+            return fullStars + (halfStars / 2)
         }
 
         getAgeOfReview(review) {
             // returns (currently) the age of the review in days since the Unix Epoch
-            let daysFactor = 1000 * 3600 * 24;
+            let daysFactor = 1000 * 3600 * 24
 
-            let date = Date.parse(review.getElementsByClassName('dateOfReview')[0].innerText);
+            let date = Date.parse(review.getElementsByClassName('dateOfReview')[0].innerText)
 
-            return date / daysFactor;
+            return date / daysFactor
         }
 
         countLikes(review) {
             // returns the number of thumbs up (this was helpful) of a given review
-            let likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/);
-            return this.baseReviewValue + (likes ? parseInt(likes[1]) : 0);
+            let likes = review.innerHTML.match(/<span>This is helpful \((.*)\)<\/span>/)
+            return this.baseReviewValue + (likes ? parseInt(likes[1]) : 0)
         }
 
         peerScore(doc) {
             // returns the weighted average of the peer review valuation model
 
             // an array so that is easier to iterate over later on
-            let reviews = Array.from(doc.getElementsByClassName('review'));
+            let reviews = Array.from(doc.getElementsByClassName('review'))
 
-            let score = 0;
-            let totalWeight = 0;
+            let score = 0
+            let totalWeight = 0
 
             reviews.forEach(review => {
                 // calculate the score
 
                 let peers = this.countLikes(review) ** this.peerPower
-                let time = this.getAgeOfReview(review) ** this.timedecay;
+                let time = this.getAgeOfReview(review) ** this.timedecay
 
-                score += this.countStars(review) * peers * time;
-                totalWeight += peers * time;
+                score += this.countStars(review) * peers * time
+                totalWeight += peers * time
                 // console.log(totalWeight)
-            });
+            })
 
             // calculate the definitive score of the course
-            score = score / totalWeight;
+            score = score / totalWeight
 
-            return score;
+            return score
         }
 
         getCourseraScore(doc) {
             // returns the official coursera valuation
-            let score = doc.getElementsByClassName('rating-text')[0].innerText;
-            // return parseFloat(score);
+            let score = doc.getElementsByClassName('rating-text')[0].innerText
+            // return parseFloat(score)
             // for security we match the number in regex before parsing it
-            return parseFloat(score.match(/[\d\.]+/));
+            return parseFloat(score.match(/[\d\.]+/))
         }
 
         getNumberRatings(doc) {
             // returns the total number of reviews of the course in coursera
-            let total = doc.querySelector('[data-test="ratings-count-without-asterisks"]').innerText;
+            let total = doc.querySelector('[data-test="ratings-count-without-asterisks"]').innerText
             // we must remove the thousand comma separator
-            return parseInt(total.replace(/,/g, ''));
+            return parseInt(total.replace(/,/g, ''))
         }
 
         checkIfReviewed(doc) {
@@ -197,28 +201,28 @@
         }
 
         async getCourseScore() {
-            let doc = await fetchPage(this.type, this.name, 'reviews');
+            let doc = await fetchPage(this.type, this.name, 'reviews')
 
             if (!this.checkIfReviewed(doc)) { return -1 }
 
             // the peer reviewed reviews get to decide 4 stars
-            let peerStars = 4 / 5;
+            let peerStars = 4 / 5
             // the rest depends on the aggregate from coursera
-            let voxPopuliStars = 1 - peerStars;
+            let voxPopuliStars = 1 - peerStars
 
-            let score = peerStars * this.peerScore(doc) + voxPopuliStars * this.getCourseraScore(doc);
+            let score = peerStars * this.peerScore(doc) + voxPopuliStars * this.getCourseraScore(doc)
 
             // round to one decimal place
-            score = score.toFixed(1);
+            score = score.toFixed(1)
 
-            return score;
+            return score
         }
     }
 
     // ------------------------------------- class Project
     class Project extends Course {
         constructor(name) {
-            super(name);
+            super(name)
             this.type = 'projects'
         }
     }
@@ -232,8 +236,8 @@
             this.courses = null
             this.alreadyVerified = false
             this.printTo = 'rating-text'
-            this.doc = fetchPage(this.type, this.name);
-            this.score = this.Score();
+            this.doc = fetchPage(this.type, this.name)
+            this.score = this.Score()
         }
 
         async initializer() {
@@ -253,13 +257,13 @@
             await Promise.all(this.courses.map(x => x.score)).then((scores) => {
                 for (var i = 0; i < scores.length; i++) {
                     if (scores[i] >= 0) {
-                        sum += parseFloat(scores[i]);
+                        sum += parseFloat(scores[i])
                         count += 1
                     }
                 }
             })
 
-            return sum > 0 ? (sum / count).toFixed(1) : -1;
+            return sum > 0 ? (sum / count).toFixed(1) : -1
         }
 
         async prettylog() {
@@ -278,13 +282,11 @@
             this.score.then((score) => {
                 let regex = badgeRegex
                 let cards = Array.from(this.doc.getElementsByClassName(this.printTo))
-                let spec = cards.shift();
+                let spec = cards.shift()
 
                 // if the specialization has not been reviewed already
                 // don't write the score
-                if (!regex.test(spec.innerText)){
-                    spec.innerHTML += makeBadge(score);
-                }
+                if (!regex.test(spec.innerText)){ spec.innerHTML += makeBadge(score) }
 
 
                 // all these promises must be fulfilled by now, Promise.all is just an
@@ -294,19 +296,19 @@
                     let scores = scoresFilter.filter(function(x) { return x >= 0 })
                     for (var i = 0; i < scores.length; i++) {
                         if (scores[i] >= 0 && !regex.test(cards[i].innerText)) {
-                            cards[i].innerHTML += makeBadge(scores[i]);
+                            cards[i].innerHTML += makeBadge(scores[i])
                         }
                     }
                 })
 
-                extensionBadge('Done');
+                extensionBadge('Done')
             })
         }
 
         async getCoursesPathnames(doc) {
             // displays all courses, has issues with the lag of the load of some scripts
-            let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
-            let showButton = doc.querySelector('button.d-block');
+            let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'))
+            let showButton = doc.querySelector('button.d-block')
 
             // to improve speed in search pages the whole list of courses
             // will only be taken into account at the specialization page
@@ -314,18 +316,18 @@
             if (showButton && showButton.innerText == 'Show More' &&
                 isCurrentFile(joinPaths(this.type, this.name))) {
                 await sleep(100)
-                showButton.click();
+                showButton.click()
             }
 
-            // await new Promise(r => setTimeout(r, 2000));
-            results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'));
+            // await new Promise(r => setTimeout(r, 2000))
+            results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'))
 
             // turn array of a tags to their pathnames
-            let pathnames = results.map(x => x.pathname);
+            let pathnames = results.map(x => x.pathname)
             // console.log(pathnames)
 
             // prepare path names
-            return pathnames.map(x => prepPathname(x)[1]);
+            return pathnames.map(x => prepPathname(x)[1])
         }
     }
 
@@ -333,16 +335,16 @@
     class Search {
 
         constructor(doc) {
-            this.results = Array.from(doc.getElementsByClassName('result-title-link'));
-            this.names = this.results.map(x => x.pathname);
+            this.results = Array.from(doc.getElementsByClassName('result-title-link'))
+            this.names = this.results.map(x => x.pathname)
             this.courses = this.names.map(discriminator)
             this.printTo = 'ratings-text'
         }
 
         async Score() {
-            // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)));
+            // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)))
             this.courses.forEach(x => x.Score())
-            await Promise.all(this.courses.map(x => x.score));
+            await Promise.all(this.courses.map(x => x.score))
         }
 
         async prettylog() {
@@ -352,7 +354,7 @@
                     console.log(this.names[i], scores[i])
                 }
 
-                extensionBadge('Done');
+                extensionBadge('Done')
             })
         }
 
@@ -360,10 +362,10 @@
             this.results.forEach((result, i) => {
 
                 if (result.getElementsByClassName(this.printTo)[0] !== undefined) {
-                    result.getElementsByClassName('ratings-icon')[0].style.width = 'unset';
+                    result.getElementsByClassName('ratings-icon')[0].style.width = 'unset'
                     this.courses[i].score.then((score) => {
                         if (score >= 0) {
-                            result.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(score);
+                            result.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(score)
                         }
                     })
                 }
@@ -372,29 +374,29 @@
     }
 
     function discriminator(pathname) {
-        [type, name] = prepPathname(pathname);
+        [type, name] = prepPathname(pathname)
 
         switch (type) {
             case 'search':
             case 'courses':
-                return new Search(document);
-                break;
+                return new Search(document)
+                break
             case 'learn':
-                return new Course(name);
-                break;
+                return new Course(name)
+                break
             case 'professional-certificates':
             case 'specializations':
-                return new Specialization(type, name);
-                break;
+                return new Specialization(type, name)
+                break
             case 'projects':
-                return new Project(name);
-                break;
+                return new Project(name)
+                break
             case 'instructor':
-                return new Instructor();
-                break;
+                return new Instructor()
+                break
             default:
                 console.error(`Unknown type: ${type} is not registered.`)
-                return null;
+                return null
         }
     }
 
@@ -402,14 +404,14 @@
     // current page
     async function main() {
         // let url = window.location.toString()
-        console.log('\n---------\n');
+        console.log('\n---------\n')
 
         // add google material icons
-        let link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = "https://fonts.googleapis.com/icon?family=Material+Icons";
-        // link.href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
-        document.head.appendChild(link);
+        let link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = "https://fonts.googleapis.com/icon?family=Material+Icons"
+        // link.href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        document.head.appendChild(link)
 
         // prevents the added text from breaking the row of stars
         var styles = `._1mzojlvw { white-space: nowrap; }`
@@ -420,11 +422,11 @@
 
 
         // START entry point to the algorithm
-        let X = discriminator(document.location.pathname);
+        let X = discriminator(document.location.pathname)
 
-        // await X.Score();
-        X.prettylog();
-        X.displayResult();
+        // await X.Score()
+        X.prettylog()
+        X.displayResult()
     }
 
     main()
