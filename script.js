@@ -17,6 +17,8 @@
     // var icon = '<i class="bi bi-patch-check"></i>'
     function makeBadge(score) { return `&nbsp;${tago}(${score}${icon})${tagc}` }
 
+    var badgeRegex = /.*?\((\d\.?\d)verified\)/
+
     function searchCSSmod() {
         // prevents the making the flex container of the original rating stars 
         // from becoming too wide when text is added
@@ -98,12 +100,12 @@
         }
 
         async Score() {
-            let regex = /.*?\((\d\.?\d)verified\)/
-            let ScoreText = document.getElementsByClassName(this.printTo)[0].innerText
+            let regex = badgeRegex
+            let scoreHTML = document.getElementsByClassName(this.printTo)
 
-            this.alreadyVerified = regex.test(ScoreText)
+            if (scoreHTML.length > 0) { this.alreadyVerified = regex.test(scoreHTML[0].innerText) }
+
             console.debug(this.alreadyVerified)
-            console.log('HIIIIIII')
 
             // if the score was already written just read it from the document
             return this.alreadyVerified ? parseFloat(regex.exec(ScoreText)[1]) : this.getCourseScore(this.name)
@@ -274,12 +276,12 @@
 
         async displayResult() {
             this.score.then((score) => {
+                let regex = badgeRegex
                 let cards = Array.from(this.doc.getElementsByClassName(this.printTo))
                 let spec = cards.shift();
 
                 // if the specialization has not been reviewed already
                 // don't write the score
-                let regex = /.*?\((\d\.?\d)verified\)/
                 if (!regex.test(spec.innerText)){
                     spec.innerHTML += makeBadge(score);
                 }
@@ -291,7 +293,7 @@
                     // Remove courses not reviwed for they don't have a related card
                     let scores = scoresFilter.filter(function(x) { return x >= 0 })
                     for (var i = 0; i < scores.length; i++) {
-                        if (scores[i] >= 0) {
+                        if (scores[i] >= 0 && !regex.test(cards[i].innerText)) {
                             cards[i].innerHTML += makeBadge(scores[i]);
                         }
                     }
