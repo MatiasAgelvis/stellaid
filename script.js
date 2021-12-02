@@ -102,17 +102,17 @@
         async Score() {
             let regex = badgeRegex
             let scoreHTML = document.getElementsByClassName(this.printTo)
-            
+            let scoreText = null
+
             // if whe are in a page where the course scores are given by the this.printTo
-            if (scoreHTML.length > 0) { 
-                let scoreText = scoreHTML[0].innerText
+            if (scoreHTML.length > 0) {
+                scoreText = scoreHTML[0].innerText
                 this.alreadyVerified = regex.test(scoreText)
                 console.debug(this.alreadyVerified)
-                return parseFloat(regex.exec(scoreText)[1])
             }
 
             // if the score was already written just read it from the document
-            return this.getCourseScore(this.name)
+            return this.alreadyVerified ? parseFloat(regex.exec(scoreText)[1]) : this.getCourseScore()
         }
 
         async prettylog() {
@@ -286,7 +286,7 @@
 
                 // if the specialization has not been reviewed already
                 // don't write the score
-                if (!regex.test(spec.innerText)){ spec.innerHTML += makeBadge(score) }
+                if (!regex.test(spec.innerText)) { spec.innerHTML += makeBadge(score) }
 
 
                 // all these promises must be fulfilled by now, Promise.all is just an
@@ -342,6 +342,24 @@
         }
 
         async Score() {
+            // ////////TODO///////////
+            // prevent scoring
+            // on already scored
+            // ///////////////////////
+            let regex = badgeRegex
+            let scoreHTML = document.getElementsByClassName(this.printTo)
+            let scoreText = null
+
+            // if whe are in a page where the course scores are given by the this.printTo
+            if (scoreHTML.length > 0) {
+                scoreText = scoreHTML[0].innerText
+                this.alreadyVerified = regex.test(scoreText)
+                console.debug(this.alreadyVerified)
+            }
+
+            // if the score was already written just read it from the document
+            return this.alreadyVerified ? parseFloat(regex.exec(scoreText)[1]) : this.getCourseScore()
+
             // await Promise.all(inputArray.map(async (i) => someAsyncFunction(i)))
             this.courses.forEach(x => x.Score())
             await Promise.all(this.courses.map(x => x.score))
@@ -359,13 +377,17 @@
         }
 
         async displayResult() {
+            let regex = badgeRegex
             this.results.forEach((result, i) => {
 
                 if (result.getElementsByClassName(this.printTo)[0] !== undefined) {
-                    result.getElementsByClassName('ratings-icon')[0].style.width = 'unset'
+                    result.getElementsByClassName(this.printTo)[0].style.width = 'unset'
                     this.courses[i].score.then((score) => {
                         if (score >= 0) {
-                            result.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(score)
+                            // if the course has been reviewed already
+                            // don't write the score
+                            let scoreNode = result.getElementsByClassName(this.printTo)[0]
+                            if (!regex.test(scoreNode.innerText)) { scoreNode.innerHTML += makeBadge(score) }
                         }
                     })
                 }
