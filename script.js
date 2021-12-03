@@ -10,19 +10,21 @@
 
     var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: bottom;\' class="material-icons">verified</i>'
 
-    // tag Open
-    var tago = '<span style=\'display: inline-block\'>'
-    // tag Close
-    var tagc = '</span>'
-    // var icon = '<i class="bi bi-patch-check"></i>'
-    function makeBadge(score) { return `&nbsp;${tago}(${score}${icon})${tagc}` }
+    function makeID(type, name) {
+        return `coursera-advisor-score-${type}-${name}`
+    }
 
-    var badgeRegex = /.*?\((\d\.?\d)verified\)/
+    // var icon = '<i class="bi bi-patch-check"></i>'
+    function makeBadge(score, type, name) {
+        return `&nbsp;<span id='${makeID(type, name)}' style='display: inline-block'>(${score}${icon})</span>`
+    }
+
+    var scoreRegex = /\((\d\.?\d)verified\)/
 
     function searchCSSmod() {
         // prevents the making the flex container of the original rating stars 
         // from becoming too wide when text is added
-        var styles = `.ratings-icon { width = unset; }`
+        var styles = `.ratings-icon { white-space: nowrap; }`
         var styleSheet = document.createElement("style")
         styleSheet.type = "text/css"
         styleSheet.innerText = styles
@@ -100,19 +102,16 @@
         }
 
         async Score() {
-            let regex = badgeRegex
-            let scoreHTML = document.getElementsByClassName(this.printTo)
-            let scoreText = null
-
-            // if whe are in a page where the course scores are given by the this.printTo
-            if (scoreHTML.length > 0) {
-                scoreText = scoreHTML[0].innerText
-                this.alreadyVerified = regex.test(scoreText)
-                console.debug(this.alreadyVerified)
-            }
+            let regex = scoreRegex
+            let scoreNode = document.getElementById(makeID(this.type, this.name))
 
             // if the score was already written just read it from the document
-            return this.alreadyVerified ? parseFloat(regex.exec(scoreText)[1]) : this.getCourseScore()
+            if (scoreNode) {
+                this.alreadyVerified = true
+                return parseFloat(regex.exec(scoreNode.innerText)[1])
+            }
+
+            return this.getCourseScore()
         }
 
         async prettylog() {
@@ -122,7 +121,7 @@
         displayResult() {
             this.score.then(x => {
                 if (x >= 0 && !this.alreadyVerified) {
-                    document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x)
+                    document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x, this.type, this.name)
                 }
                 extensionBadge('Done')
             })
@@ -236,12 +235,14 @@
             this.courses = null
             this.alreadyVerified = false
             this.printTo = 'rating-text'
+            // should delete this var?
             this.doc = fetchPage(this.type, this.name)
             this.score = this.Score()
         }
 
         async initializer() {
             // this async function finishes the construction
+            // this allows to use doc as a normal domtree
             this.doc = await this.doc
             this.names = await this.getCoursesPathnames(this.doc)
             this.courses = this.names.map(x => new Course(x))
@@ -280,26 +281,37 @@
 
         async displayResult() {
             this.score.then((score) => {
-                let regex = badgeRegex
+                let regex = scoreRegex
                 let cards = Array.from(this.doc.getElementsByClassName(this.printTo))
                 let spec = cards.shift()
 
                 // if the specialization has not been reviewed already
                 // don't write the score
-                if (!regex.test(spec.innerText)) { spec.innerHTML += makeBadge(score) }
+                if (!document.getElementById(makeID(this.type, this.name))) 
+                    { spec.innerHTML += makeBadge(score, this.type, this.name) }
 
 
                 // all these promises must be fulfilled by now, Promise.all is just an
                 // alternative to iterate over all courses
-                Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
-                    // Remove courses not reviwed for they don't have a related card
-                    let scores = scoresFilter.filter(function(x) { return x >= 0 })
-                    for (var i = 0; i < scores.length; i++) {
-                        if (scores[i] >= 0 && !regex.test(cards[i].innerText)) {
-                            cards[i].innerHTML += makeBadge(scores[i])
+                for (var i = this.courses.length - 1; i >= 0; i--) {
+                    let course = this.courses[i]
+                    course.score.then((score) => {
+                        if (score > 0 && !document.getElementById(makeID(course.type, course.name))) {
+                            cards[i].innerHTML += makeBadge(scores[i], this.type, this.name)
                         }
-                    }
-                })
+                    })
+                }
+
+
+                // Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
+                //     // Remove courses not reviwed for they don't have a related card
+                //     let scores = scoresFilter.filter(function(x) { return x >= 0 })
+                //     for (var i = 0; i < scores.length; i++) {
+                //         if (scores[i] >= 0 && !regex.test(cards[i].innerText)) {
+                //             cards[i].innerHTML += makeBadge(scores[i], this.type, this.name)
+                //         }
+                //     }
+                // })
 
                 extensionBadge('Done')
             })
@@ -346,7 +358,7 @@
             // prevent scoring
             // on already scored
             // ///////////////////////
-            let regex = badgeRegex
+            let regex = scoreRegex
             let scoreHTML = document.getElementsByClassName(this.printTo)
             let scoreText = null
 
@@ -377,7 +389,7 @@
         }
 
         async displayResult() {
-            let regex = badgeRegex
+            let regex = scoreRegex
             this.results.forEach((result, i) => {
 
                 if (result.getElementsByClassName(this.printTo)[0] !== undefined) {
@@ -387,7 +399,11 @@
                             // if the course has been reviewed already
                             // don't write the score
                             let scoreNode = result.getElementsByClassName(this.printTo)[0]
-                            if (!regex.test(scoreNode.innerText)) { scoreNode.innerHTML += makeBadge(score) }
+                            if (!regex.test(scoreNode.innerText)) {
+                                scoreNode.innerHTML += makeBadge(score,
+                                    this.courses[i].type,
+                                    this.courses[i].name)
+                            }
                         }
                     })
                 }
