@@ -235,16 +235,12 @@
             this.courses = null
             this.alreadyVerified = false
             this.printTo = 'rating-text'
-            // should delete this var?
-            this.doc = fetchPage(this.type, this.name)
             this.score = this.Score()
         }
 
         async initializer() {
             // this async function finishes the construction
-            // this allows to use doc as a normal domtree
-            this.doc = await this.doc
-            this.names = await this.getCoursesPathnames(this.doc)
+            this.names = await this.getCoursesPathnames(await fetchPage(this.type, this.name))
             this.courses = this.names.map(x => new Course(x))
         }
 
@@ -281,7 +277,7 @@
         async displayResult() {
             this.score.then((score) => {
                 let regex = scoreRegex
-                let cards = Array.from(this.doc.getElementsByClassName(this.printTo))
+                let cards = Array.from(document.getElementsByClassName(this.printTo))
                 let spec = cards.shift()
 
                 // if the specialization has not been reviewed already
