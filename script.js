@@ -290,9 +290,10 @@
                 // alternative to iterate over all courses
                 for (var i = this.courses.length - 1; i >= 0; i--) {
                     let course = this.courses[i]
+                    let scoreNode = document.getElementById(makeID(course.type, course.name))
                     course.score.then((score) => {
-                        if (score > 0 && !document.getElementById(makeID(course.type, course.name))) {
-                            cards[i].innerHTML += makeBadge(scores[i], this.type, this.name)
+                        if (score > 0 && !scoreNode) {
+                            cards[i].innerHTML += makeBadge(score, this.type, this.name)
                         }
                     })
                 }
