@@ -256,12 +256,11 @@
             let count = 0
 
             await Promise.all(this.courses.map(x => x.score)).then((scores) => {
-                for (var i = 0; i < scores.length; i++) {
-                    if (scores[i] >= 0) {
-                        sum += parseFloat(scores[i])
-                        count += 1
-                    }
-                }
+                let sum_reduce = (prev, curr) => prev + curr;
+                
+                sum = scores.filter(x => x >= 0).reduce(sum_reduce)
+                count = scores.filter(x => x >= 0).length
+
             })
 
             return sum > 0 ? (sum / count).toFixed(1) : -1
