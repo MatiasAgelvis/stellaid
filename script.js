@@ -10,13 +10,13 @@
 
     var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: bottom;\' class="material-icons">verified</i>'
 
-    function makeID(type, name) {
-        return `coursera-advisor-score-${type}-${name}`
-    }
+    function makeID(type, name) { return `coursera-advisor-score-${type}-${name}` }
+
+    function makeBadge(score) { return `(${score}${icon})` }
 
     // var icon = '<i class="bi bi-patch-check"></i>'
-    function makeBadge(score, type, name) {
-        return `&nbsp;<span id='${makeID(type, name)}' style='display: inline-block'>(${score}${icon})</span>`
+    function makeScoreNode(type, name, message='') {
+        return `&nbsp;<span id='${makeID(type, name)}' style='display: inline-block'>${message}</span>`
     }
 
     var scoreRegex = /\((\d\.?\d)verified\)/
@@ -82,9 +82,7 @@
         return doc
     }
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms))
-    }
+    function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 
     // ------------------------------------- class Course
     class Course {
@@ -92,8 +90,10 @@
         constructor(name) {
             this.name = name
             this.type = 'learn'
-            this.printTo = 'rating-text'
+            this.ID = makeID(this.type, this.name)
+            this.scoreNode = document.getElementById(this.ID)
             this.alreadyVerified = false
+            this.printTo = 'rating-text'
             this.hasReviews = true
             this.peerPower = 2
             this.timedecay = 0.3
@@ -102,29 +102,27 @@
         }
 
         async Score() {
-            let regex = scoreRegex
-            let scoreNode = document.getElementById(makeID(this.type, this.name))
-
-            // if the score was already written just read it from the document
-            if (scoreNode) {
-                this.alreadyVerified = true
-                return parseFloat(regex.exec(scoreNode.innerText)[1])
-            }
-
-            return this.getCourseScore()
+            this.alreadyVerified = Boolean(this.scoreNode) && scoreRegex.test(this.scoreNode.innerText)
+            // if the score was already written just read it from the document            
+            return this.alreadyVerified ?
+                              parseFloat(scoreRegex.exec(this.scoreNode.innerText)[1]).toFixed(1) 
+                            : this.getCourseScore()
         }
 
         async prettylog() {
-            this.score.then(x => console.log(this.name, x))
+            let score = await this.score
+            console.log(this.name, score)
         }
 
-        displayResult() {
-            this.score.then(x => {
-                if (x >= 0 && !this.alreadyVerified) {
-                    document.getElementsByClassName(this.printTo)[0].innerHTML += makeBadge(x, this.type, this.name)
-                }
-                extensionBadge('Done')
-            })
+        async displayResult() {
+            let score = await this.score
+            // if sapn for score doesn't exist make it
+            if(!document.getElementById(this.ID)){
+                document.getElementsByClassName(this.printTo)[0].innerHTML += makeScoreNode(this.type, this.name)
+            }
+
+            if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
+            extensionBadge('Done')
         }
 
         countStars(review) {
@@ -231,6 +229,9 @@
         constructor(type, name) {
             this.name = name
             this.type = type
+            this.ID = makeID(this.type, this.name)
+            this.scoreNode = document.getElementById(this.ID)
+            this.alreadyVerified = false
             this.names = null
             this.courses = null
             this.alreadyVerified = false
@@ -242,21 +243,19 @@
             // this async function finishes the construction
             this.names = await this.getCoursesPathnames(await fetchPage(this.type, this.name))
             this.courses = this.names.map(x => new Course(x))
+            this.alreadyVerified = Boolean(this.scoreNode) && scoreRegex.test(this.scoreNode.innerText)
         }
 
         async Score() {
             await this.initializer()
-
-            let score = 0
             let sum = 0
             let count = 0
 
             await Promise.all(this.courses.map(x => x.score)).then((scores) => {
                 let sum_reduce = (prev, curr) => prev + curr;
-                
+                scores = scores.map(parseFloat)
                 sum = scores.filter(x => x >= 0).reduce(sum_reduce)
                 count = scores.filter(x => x >= 0).length
-
             })
 
             return sum > 0 ? (sum / count).toFixed(1) : -1
@@ -275,42 +274,32 @@
         }
 
         async displayResult() {
-            this.score.then((score) => {
-                let regex = scoreRegex
-                let cards = Array.from(document.getElementsByClassName(this.printTo))
-                let spec = cards.shift()
+            let cards = Array.from(document.getElementsByClassName(this.printTo))
+            let spec = cards.shift()
 
-                // if the specialization has not been reviewed already
-                // don't write the score
-                if (!document.getElementById(makeID(this.type, this.name))) 
-                    { spec.innerHTML += makeBadge(score, this.type, this.name) }
+            // score the specialization
+            if(!document.getElementById(this.ID)){
+                spec.innerHTML += makeScoreNode(this.type, this.name)
+            }
+            let score = await this.score
+            if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
 
 
-                // all these promises must be fulfilled by now, Promise.all is just an
-                // alternative to iterate over all courses
-                for (var i = this.courses.length - 1; i >= 0; i--) {
-                    let course = this.courses[i]
-                    let scoreNode = document.getElementById(makeID(course.type, course.name))
-                    course.score.then((score) => {
-                        if (score > 0 && !scoreNode) {
-                            cards[i].innerHTML += makeBadge(score, this.type, this.name)
-                        }
-                    })
+            // score the courses
+            this.courses.forEach( async (course, i) => {
+                let scoreNode = document.getElementById(course.ID)
+                let card = cards[i]
+                // console.log(cards[i])
+                if(!scoreNode){
+                    card.innerHTML += makeScoreNode(course.type, course.name)
                 }
 
-
-                // Promise.all(this.courses.map(x => x.score)).then((scoresFilter) => {
-                //     // Remove courses not reviwed for they don't have a related card
-                //     let scores = scoresFilter.filter(function(x) { return x >= 0 })
-                //     for (var i = 0; i < scores.length; i++) {
-                //         if (scores[i] >= 0 && !regex.test(cards[i].innerText)) {
-                //             cards[i].innerHTML += makeBadge(scores[i], this.type, this.name)
-                //         }
-                //     }
-                // })
-
-                extensionBadge('Done')
+                let score = await course.score
+                console.log(score)
+                if (score >= 0) { scoreNode.innerHTML = makeBadge(score) }
             })
+
+            extensionBadge('Done')
         }
 
         async getCoursesPathnames(doc) {
