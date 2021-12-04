@@ -16,7 +16,7 @@
 
     // var icon = '<i class="bi bi-patch-check"></i>'
     function makeScoreNode(type, name, message='') {
-        return `&nbsp;<span id='${makeID(type, name)}' style='display: inline-block'>${message}</span>`
+        return `&nbsp;<span id='${makeID(type, name)}' style='display: inline-block; white-space: nowrap;'>${message}</span>`
     }
 
     var scoreRegex = /\((\d\.?\d)verified\)/
@@ -24,7 +24,7 @@
     function searchCSSmod() {
         // prevents the making the flex container of the original rating stars 
         // from becoming too wide when text is added
-        var styles = `.ratings-icon { white-space: nowrap; }`
+        var styles = `.ratings-icon, .ratings-text { white-space: nowrap; }`
         var styleSheet = document.createElement("style")
         styleSheet.type = "text/css"
         styleSheet.innerText = styles
@@ -274,7 +274,7 @@
 
         async displayResult() {
             this.setupScoreNodes()
-            
+
             let cards = Array.from(document.getElementsByClassName(this.printTo))
             let spec = cards.shift()
 
@@ -309,6 +309,7 @@
         }
 
         async getCoursesPathnames(doc) {
+            searchCSSmod()
             // displays all courses, has issues with the lag of the load of some scripts
             let results = Array.from(doc.querySelectorAll('[data-e2e="course-link"]'))
             let showButton = doc.querySelector('button.d-block')
