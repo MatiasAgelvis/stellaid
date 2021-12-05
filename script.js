@@ -91,7 +91,7 @@
             this.name = name
             this.type = 'learn'
             this.ID = makeID(this.type, this.name)
-            this.printTo = 'rating-text'
+            this.target = document.getElementsByClassName('rating-text')[0]
             this.hasReviews = true
             this.peerPower = 2
             this.timedecay = 0.3
@@ -103,7 +103,7 @@
             let scoreNode = document.getElementById(this.ID)
             let alreadyVerified = Boolean(scoreNode) && scoreRegex.test(scoreNode.innerText)
             // if the score was already written just read it from the document            
-            return alreadyVerified ?
+            return alreadyVerified ? 
                               parseFloat(scoreRegex.exec(scoreNode.innerText)[1]).toFixed(1) 
                             : this.getCourseScore()
         }
@@ -115,13 +115,14 @@
 
         async displayResult() {
             let score = await this.score
-            // if sapn for score doesn't exist make it
-            if(!document.getElementById(this.ID)){
-                document.getElementsByClassName(this.printTo)[0].innerHTML += makeScoreNode(this.type, this.name)
-            }
+            // if span for score doesn't exist make it
+            if (this.target) {
+                if(!document.getElementById(this.ID)){
+                    this.target.innerHTML += makeScoreNode(this.type, this.name)
+                }
 
-            if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
-            extensionBadge('Done')
+                if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
+            }
         }
 
         countStars(review) {
@@ -220,6 +221,7 @@
         constructor(name) {
             super(name)
             this.type = 'projects'
+            this.ID = makeID(this.type, this.name)
         }
     }
 
@@ -233,6 +235,7 @@
             this.names = null
             this.courses = null
             this.printTo = 'rating-text'
+            this.target = document.getElementsByClassName(this.printTo)[0]
             this.score = this.Score()
         }
 
@@ -244,14 +247,15 @@
 
         async Score() {
             await this.initializer()
-            let sum = 0
-            let count = 0
+            
             let sum_reduce = (prev, curr) => prev + curr
             let scores = await Promise.all(this.courses.map(x => x.score))
-            
             scores = scores.map(parseFloat)
-            sum = scores.filter(x => x >= 0).reduce(sum_reduce)
-            count = scores.filter(x => x >= 0).length
+            
+            let filtered = scores.filter(x => x > 0)
+            
+            let sum = filtered.length > 0 ? filtered.reduce(sum_reduce) : 0
+            let count = filtered.length
     
             return sum > 0 ? (sum / count).toFixed(1) : -1
         }
@@ -269,39 +273,24 @@
         }
 
         async displayResult() {
-            this.setupScoreNodes()
-
+            await this.Score()
             let cards = Array.from(document.getElementsByClassName(this.printTo))
             let spec = cards.shift()
+
+            // setup the scoreNodes for the specialization
+            if(!document.getElementById(this.ID)){
+                this.target.innerHTML += makeScoreNode(this.type, this.name)
+            }
+
+            // setup the scoreNodes for the courses
+            this.courses.forEach( (course, i) => { course.target = cards[i] })
 
             let score = await this.score
             // score the specialization
             if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
             
             // score the courses
-            this.courses.forEach( async (course, i) => {
-                let score = await course.score
-                let scoreNode = document.getElementById(course.ID)
-                if (score >= 0) { scoreNode.innerHTML = makeBadge(score) }
-            })
-
-            extensionBadge('Done')
-        }
-
-        setupScoreNodes() {
-            let cards = Array.from(document.getElementsByClassName(this.printTo))
-            let spec = cards.shift()
-            // setup the scoreNodes for the specialization
-            if(!document.getElementById(this.ID)){
-                spec.innerHTML += makeScoreNode(this.type, this.name)
-            }
-            // setup the scoreNodes for the courses
-            this.courses.forEach( (course, i) => {
-                let scoreNode = document.getElementById(course.ID)
-                if(!scoreNode){
-                    cards[i].innerHTML += makeScoreNode(course.type, course.name)
-                }
-            })
+            this.courses.forEach( (course) => { course.displayResult() })
         }
 
         async getCoursesPathnames(doc) {
@@ -338,17 +327,9 @@
             this.names = this.results.map(x => x.pathname)
             this.courses = this.names.map(discriminator)
             this.printTo = 'ratings-text'
-        }
-
-        setupScoreNodes() {
             let cards = Array.from(document.getElementsByClassName(this.printTo))
             // setup the scoreNodes for the courses
-            this.courses.forEach( (course, i) => {
-                let scoreNode = document.getElementById(course.ID)
-                if(!scoreNode){
-                    cards[i].innerHTML += makeScoreNode(course.type, course.name)
-                }
-            })
+            this.courses.forEach( (course, i) => { course.target = cards[i] })
         }
 
         async Score() {
@@ -357,25 +338,16 @@
         }
 
         async prettylog() {
-            Promise.all(this.courses.map(x => x.score)).then((scores) => {
+            await Promise.all(this.courses.map(x => x.score)).then((scores) => {
 
                 for (let i = 0; i < this.names.length; i++) {
                     console.log(this.names[i], scores[i])
                 }
-
-                extensionBadge('Done')
             })
         }
 
         async displayResult() {
-            await this.setupScoreNodes()
-            this.courses.forEach( async (course, i) => {
-                let score = await course.score
-                let scoreNode = document.getElementById(course.ID)
-                if (score >= 0) { scoreNode.innerHTML = makeBadge(score) }
-            })
-
-            extensionBadge('Done')
+            this.courses.forEach( (course) => { course.displayResult() })
         }
     }
 
@@ -431,8 +403,10 @@
         let X = discriminator(document.location.pathname)
 
         // await X.Score()
-        X.prettylog()
         X.displayResult()
+        await X.prettylog()
+        extensionBadge('Done')
+
     }
 
     main()
