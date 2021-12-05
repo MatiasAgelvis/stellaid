@@ -91,7 +91,6 @@
             this.name = name
             this.type = 'learn'
             this.ID = makeID(this.type, this.name)
-            this.alreadyVerified = false
             this.printTo = 'rating-text'
             this.hasReviews = true
             this.peerPower = 2
@@ -102,9 +101,9 @@
 
         async Score() {
             let scoreNode = document.getElementById(this.ID)
-            this.alreadyVerified = Boolean(scoreNode) && scoreRegex.test(scoreNode.innerText)
+            let alreadyVerified = Boolean(scoreNode) && scoreRegex.test(scoreNode.innerText)
             // if the score was already written just read it from the document            
-            return this.alreadyVerified ?
+            return alreadyVerified ?
                               parseFloat(scoreRegex.exec(scoreNode.innerText)[1]).toFixed(1) 
                             : this.getCourseScore()
         }
@@ -231,10 +230,8 @@
             this.type = type
             this.ID = makeID(this.type, this.name)
             this.scoreNode = document.getElementById(this.ID)
-            this.alreadyVerified = false
             this.names = null
             this.courses = null
-            this.alreadyVerified = false
             this.printTo = 'rating-text'
             this.score = this.Score()
         }
@@ -243,7 +240,6 @@
             // this async function finishes the construction
             this.names = await this.getCoursesPathnames(await fetchPage(this.type, this.name))
             this.courses = this.names.map(x => new Course(x))
-            this.alreadyVerified = Boolean(this.scoreNode) && scoreRegex.test(this.scoreNode.innerText)
         }
 
         async Score() {
@@ -342,7 +338,6 @@
             this.names = this.results.map(x => x.pathname)
             this.courses = this.names.map(discriminator)
             this.printTo = 'ratings-text'
-            this.setupScoreNodes()
         }
 
         setupScoreNodes() {
@@ -373,7 +368,7 @@
         }
 
         async displayResult() {
-            let regex = scoreRegex
+            await this.setupScoreNodes()
             this.courses.forEach( async (course, i) => {
                 let score = await course.score
                 let scoreNode = document.getElementById(course.ID)
