@@ -7,37 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		90A6B8AE2768A97D00CC8E1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A6B8AD2768A97D00CC8E1C /* AppDelegate.swift */; };
-		90A6B8B12768A97D00CC8E1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90A6B8AF2768A97D00CC8E1C /* Main.storyboard */; };
-		90A6B8B32768A97D00CC8E1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A6B8B22768A97D00CC8E1C /* ViewController.swift */; };
-		90A6B8B52768A97F00CC8E1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90A6B8B42768A97F00CC8E1C /* Assets.xcassets */; };
-		90A6B8BC2768A97F00CC8E1C /* Coursera Advisor Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 90A6B8BB2768A97F00CC8E1C /* Coursera Advisor Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		90A6B8C12768A97F00CC8E1C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6B8C02768A97F00CC8E1C /* Cocoa.framework */; };
-		90A6B8C42768A97F00CC8E1C /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A6B8C32768A97F00CC8E1C /* SafariWebExtensionHandler.swift */; };
-		90A6B8D52768A98000CC8E1C /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 90A6B8D12768A98000CC8E1C /* background.js */; };
-		90A6B8D62768A98000CC8E1C /* images in Resources */ = {isa = PBXBuildFile; fileRef = 90A6B8D22768A98000CC8E1C /* images */; };
-		90A6B8D72768A98000CC8E1C /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 90A6B8D32768A98000CC8E1C /* script.js */; };
-		90A6B8D82768A98000CC8E1C /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 90A6B8D42768A98000CC8E1C /* manifest.json */; };
+		9050A1052769342100C478F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A1042769342100C478F7 /* AppDelegate.swift */; };
+		9050A1082769342100C478F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9050A1062769342100C478F7 /* Main.storyboard */; };
+		9050A10A2769342100C478F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A1092769342100C478F7 /* ViewController.swift */; };
+		9050A10C2769342200C478F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9050A10B2769342200C478F7 /* Assets.xcassets */; };
+		9050A1132769342300C478F7 /* Coursera Advisor Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9050A1182769342300C478F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9050A1172769342300C478F7 /* Cocoa.framework */; };
+		9050A11B2769342300C478F7 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */; };
+		9050A12C2769342400C478F7 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 9050A1282769342400C478F7 /* background.js */; };
+		9050A12D2769342400C478F7 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 9050A1292769342400C478F7 /* images */; };
+		9050A12E2769342400C478F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 9050A12A2769342400C478F7 /* script.js */; };
+		9050A12F2769342400C478F7 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 9050A12B2769342400C478F7 /* manifest.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		90A6B8BD2768A97F00CC8E1C /* PBXContainerItemProxy */ = {
+		9050A1142769342300C478F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 90A6B8A12768A97D00CC8E1C /* Project object */;
+			containerPortal = 9050A0F82769342100C478F7 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 90A6B8BA2768A97F00CC8E1C;
+			remoteGlobalIDString = 9050A1112769342300C478F7;
 			remoteInfo = "Coursera Advisor Extension";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		90A6B8CC2768A97F00CC8E1C /* Embed App Extensions */ = {
+		9050A1232769342300C478F7 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				90A6B8BC2768A97F00CC8E1C /* Coursera Advisor Extension.appex in Embed App Extensions */,
+				9050A1132769342300C478F7 /* Coursera Advisor Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,101 +45,101 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		90A6B8A92768A97D00CC8E1C /* Coursera Advisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coursera Advisor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		90A6B8AC2768A97D00CC8E1C /* Coursera_Advisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor.entitlements; sourceTree = "<group>"; };
-		90A6B8AD2768A97D00CC8E1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		90A6B8B02768A97D00CC8E1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		90A6B8B22768A97D00CC8E1C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		90A6B8B42768A97F00CC8E1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		90A6B8B62768A97F00CC8E1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		90A6B8BB2768A97F00CC8E1C /* Coursera Advisor Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Coursera Advisor Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		90A6B8C02768A97F00CC8E1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		90A6B8C32768A97F00CC8E1C /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
-		90A6B8C52768A97F00CC8E1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		90A6B8C62768A97F00CC8E1C /* Coursera_Advisor_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor_Extension.entitlements; sourceTree = "<group>"; };
-		90A6B8D12768A98000CC8E1C /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../src_mv2/background.js; sourceTree = "<group>"; };
-		90A6B8D22768A98000CC8E1C /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../src_mv2/images; sourceTree = "<group>"; };
-		90A6B8D32768A98000CC8E1C /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = script.js; path = ../../src_mv2/script.js; sourceTree = "<group>"; };
-		90A6B8D42768A98000CC8E1C /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../src_mv2/manifest.json; sourceTree = "<group>"; };
+		9050A1002769342100C478F7 /* Coursera Advisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coursera Advisor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9050A1032769342100C478F7 /* Coursera_Advisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor.entitlements; sourceTree = "<group>"; };
+		9050A1042769342100C478F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9050A1072769342100C478F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9050A1092769342100C478F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9050A10B2769342200C478F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9050A10D2769342200C478F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Coursera Advisor Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9050A1172769342300C478F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		9050A11C2769342300C478F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9050A11D2769342300C478F7 /* Coursera_Advisor_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor_Extension.entitlements; sourceTree = "<group>"; };
+		9050A1282769342400C478F7 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../src/background.js; sourceTree = "<group>"; };
+		9050A1292769342400C478F7 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../src/images; sourceTree = "<group>"; };
+		9050A12A2769342400C478F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = script.js; path = ../../src/script.js; sourceTree = "<group>"; };
+		9050A12B2769342400C478F7 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../src/manifest.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		90A6B8A62768A97D00CC8E1C /* Frameworks */ = {
+		9050A0FD2769342100C478F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		90A6B8B82768A97F00CC8E1C /* Frameworks */ = {
+		9050A10F2769342300C478F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90A6B8C12768A97F00CC8E1C /* Cocoa.framework in Frameworks */,
+				9050A1182769342300C478F7 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		90A6B8A02768A97D00CC8E1C = {
+		9050A0F72769342100C478F7 = {
 			isa = PBXGroup;
 			children = (
-				90A6B8AB2768A97D00CC8E1C /* Coursera Advisor */,
-				90A6B8C22768A97F00CC8E1C /* Coursera Advisor Extension */,
-				90A6B8BF2768A97F00CC8E1C /* Frameworks */,
-				90A6B8AA2768A97D00CC8E1C /* Products */,
+				9050A1022769342100C478F7 /* Coursera Advisor */,
+				9050A1192769342300C478F7 /* Coursera Advisor Extension */,
+				9050A1162769342300C478F7 /* Frameworks */,
+				9050A1012769342100C478F7 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		90A6B8AA2768A97D00CC8E1C /* Products */ = {
+		9050A1012769342100C478F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				90A6B8A92768A97D00CC8E1C /* Coursera Advisor.app */,
-				90A6B8BB2768A97F00CC8E1C /* Coursera Advisor Extension.appex */,
+				9050A1002769342100C478F7 /* Coursera Advisor.app */,
+				9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		90A6B8AB2768A97D00CC8E1C /* Coursera Advisor */ = {
+		9050A1022769342100C478F7 /* Coursera Advisor */ = {
 			isa = PBXGroup;
 			children = (
-				90A6B8AC2768A97D00CC8E1C /* Coursera_Advisor.entitlements */,
-				90A6B8AD2768A97D00CC8E1C /* AppDelegate.swift */,
-				90A6B8AF2768A97D00CC8E1C /* Main.storyboard */,
-				90A6B8B22768A97D00CC8E1C /* ViewController.swift */,
-				90A6B8B42768A97F00CC8E1C /* Assets.xcassets */,
-				90A6B8B62768A97F00CC8E1C /* Info.plist */,
+				9050A1032769342100C478F7 /* Coursera_Advisor.entitlements */,
+				9050A1042769342100C478F7 /* AppDelegate.swift */,
+				9050A1062769342100C478F7 /* Main.storyboard */,
+				9050A1092769342100C478F7 /* ViewController.swift */,
+				9050A10B2769342200C478F7 /* Assets.xcassets */,
+				9050A10D2769342200C478F7 /* Info.plist */,
 			);
 			path = "Coursera Advisor";
 			sourceTree = "<group>";
 		};
-		90A6B8BF2768A97F00CC8E1C /* Frameworks */ = {
+		9050A1162769342300C478F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				90A6B8C02768A97F00CC8E1C /* Cocoa.framework */,
+				9050A1172769342300C478F7 /* Cocoa.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		90A6B8C22768A97F00CC8E1C /* Coursera Advisor Extension */ = {
+		9050A1192769342300C478F7 /* Coursera Advisor Extension */ = {
 			isa = PBXGroup;
 			children = (
-				90A6B8D02768A98000CC8E1C /* Resources */,
-				90A6B8C32768A97F00CC8E1C /* SafariWebExtensionHandler.swift */,
-				90A6B8C52768A97F00CC8E1C /* Info.plist */,
-				90A6B8C62768A97F00CC8E1C /* Coursera_Advisor_Extension.entitlements */,
+				9050A1272769342400C478F7 /* Resources */,
+				9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */,
+				9050A11C2769342300C478F7 /* Info.plist */,
+				9050A11D2769342300C478F7 /* Coursera_Advisor_Extension.entitlements */,
 			);
 			path = "Coursera Advisor Extension";
 			sourceTree = "<group>";
 		};
-		90A6B8D02768A98000CC8E1C /* Resources */ = {
+		9050A1272769342400C478F7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				90A6B8D12768A98000CC8E1C /* background.js */,
-				90A6B8D22768A98000CC8E1C /* images */,
-				90A6B8D32768A98000CC8E1C /* script.js */,
-				90A6B8D42768A98000CC8E1C /* manifest.json */,
+				9050A1282769342400C478F7 /* background.js */,
+				9050A1292769342400C478F7 /* images */,
+				9050A12A2769342400C478F7 /* script.js */,
+				9050A12B2769342400C478F7 /* manifest.json */,
 			);
 			name = Resources;
 			path = "Coursera Advisor Extension";
@@ -148,32 +148,32 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		90A6B8A82768A97D00CC8E1C /* Coursera Advisor */ = {
+		9050A0FF2769342100C478F7 /* Coursera Advisor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 90A6B8CD2768A97F00CC8E1C /* Build configuration list for PBXNativeTarget "Coursera Advisor" */;
+			buildConfigurationList = 9050A1242769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor" */;
 			buildPhases = (
-				90A6B8A52768A97D00CC8E1C /* Sources */,
-				90A6B8A62768A97D00CC8E1C /* Frameworks */,
-				90A6B8A72768A97D00CC8E1C /* Resources */,
-				90A6B8CC2768A97F00CC8E1C /* Embed App Extensions */,
+				9050A0FC2769342100C478F7 /* Sources */,
+				9050A0FD2769342100C478F7 /* Frameworks */,
+				9050A0FE2769342100C478F7 /* Resources */,
+				9050A1232769342300C478F7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				90A6B8BE2768A97F00CC8E1C /* PBXTargetDependency */,
+				9050A1152769342300C478F7 /* PBXTargetDependency */,
 			);
 			name = "Coursera Advisor";
 			productName = "Coursera Advisor";
-			productReference = 90A6B8A92768A97D00CC8E1C /* Coursera Advisor.app */;
+			productReference = 9050A1002769342100C478F7 /* Coursera Advisor.app */;
 			productType = "com.apple.product-type.application";
 		};
-		90A6B8BA2768A97F00CC8E1C /* Coursera Advisor Extension */ = {
+		9050A1112769342300C478F7 /* Coursera Advisor Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 90A6B8C92768A97F00CC8E1C /* Build configuration list for PBXNativeTarget "Coursera Advisor Extension" */;
+			buildConfigurationList = 9050A1202769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor Extension" */;
 			buildPhases = (
-				90A6B8B72768A97F00CC8E1C /* Sources */,
-				90A6B8B82768A97F00CC8E1C /* Frameworks */,
-				90A6B8B92768A97F00CC8E1C /* Resources */,
+				9050A10E2769342300C478F7 /* Sources */,
+				9050A10F2769342300C478F7 /* Frameworks */,
+				9050A1102769342300C478F7 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -181,27 +181,27 @@
 			);
 			name = "Coursera Advisor Extension";
 			productName = "Coursera Advisor Extension";
-			productReference = 90A6B8BB2768A97F00CC8E1C /* Coursera Advisor Extension.appex */;
+			productReference = 9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		90A6B8A12768A97D00CC8E1C /* Project object */ = {
+		9050A0F82769342100C478F7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					90A6B8A82768A97D00CC8E1C = {
+					9050A0FF2769342100C478F7 = {
 						CreatedOnToolsVersion = 12.4;
 					};
-					90A6B8BA2768A97F00CC8E1C = {
+					9050A1112769342300C478F7 = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
-			buildConfigurationList = 90A6B8A42768A97D00CC8E1C /* Build configuration list for PBXProject "Coursera Advisor" */;
+			buildConfigurationList = 9050A0FB2769342100C478F7 /* Build configuration list for PBXProject "Coursera Advisor" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -209,73 +209,73 @@
 				en,
 				Base,
 			);
-			mainGroup = 90A6B8A02768A97D00CC8E1C;
-			productRefGroup = 90A6B8AA2768A97D00CC8E1C /* Products */;
+			mainGroup = 9050A0F72769342100C478F7;
+			productRefGroup = 9050A1012769342100C478F7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				90A6B8A82768A97D00CC8E1C /* Coursera Advisor */,
-				90A6B8BA2768A97F00CC8E1C /* Coursera Advisor Extension */,
+				9050A0FF2769342100C478F7 /* Coursera Advisor */,
+				9050A1112769342300C478F7 /* Coursera Advisor Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		90A6B8A72768A97D00CC8E1C /* Resources */ = {
+		9050A0FE2769342100C478F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90A6B8B52768A97F00CC8E1C /* Assets.xcassets in Resources */,
-				90A6B8B12768A97D00CC8E1C /* Main.storyboard in Resources */,
+				9050A10C2769342200C478F7 /* Assets.xcassets in Resources */,
+				9050A1082769342100C478F7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		90A6B8B92768A97F00CC8E1C /* Resources */ = {
+		9050A1102769342300C478F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90A6B8D82768A98000CC8E1C /* manifest.json in Resources */,
-				90A6B8D62768A98000CC8E1C /* images in Resources */,
-				90A6B8D72768A98000CC8E1C /* script.js in Resources */,
-				90A6B8D52768A98000CC8E1C /* background.js in Resources */,
+				9050A12F2769342400C478F7 /* manifest.json in Resources */,
+				9050A12D2769342400C478F7 /* images in Resources */,
+				9050A12E2769342400C478F7 /* script.js in Resources */,
+				9050A12C2769342400C478F7 /* background.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		90A6B8A52768A97D00CC8E1C /* Sources */ = {
+		9050A0FC2769342100C478F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90A6B8B32768A97D00CC8E1C /* ViewController.swift in Sources */,
-				90A6B8AE2768A97D00CC8E1C /* AppDelegate.swift in Sources */,
+				9050A10A2769342100C478F7 /* ViewController.swift in Sources */,
+				9050A1052769342100C478F7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		90A6B8B72768A97F00CC8E1C /* Sources */ = {
+		9050A10E2769342300C478F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90A6B8C42768A97F00CC8E1C /* SafariWebExtensionHandler.swift in Sources */,
+				9050A11B2769342300C478F7 /* SafariWebExtensionHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		90A6B8BE2768A97F00CC8E1C /* PBXTargetDependency */ = {
+		9050A1152769342300C478F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 90A6B8BA2768A97F00CC8E1C /* Coursera Advisor Extension */;
-			targetProxy = 90A6B8BD2768A97F00CC8E1C /* PBXContainerItemProxy */;
+			target = 9050A1112769342300C478F7 /* Coursera Advisor Extension */;
+			targetProxy = 9050A1142769342300C478F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		90A6B8AF2768A97D00CC8E1C /* Main.storyboard */ = {
+		9050A1062769342100C478F7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				90A6B8B02768A97D00CC8E1C /* Base */,
+				9050A1072769342100C478F7 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -283,7 +283,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		90A6B8C72768A97F00CC8E1C /* Debug */ = {
+		9050A11E2769342300C478F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -344,7 +344,7 @@
 			};
 			name = Debug;
 		};
-		90A6B8C82768A97F00CC8E1C /* Release */ = {
+		9050A11F2769342300C478F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -398,7 +398,7 @@
 			};
 			name = Release;
 		};
-		90A6B8CA2768A97F00CC8E1C /* Debug */ = {
+		9050A1212769342300C478F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Coursera Advisor Extension/Coursera_Advisor_Extension.entitlements";
@@ -417,7 +417,7 @@
 			};
 			name = Debug;
 		};
-		90A6B8CB2768A97F00CC8E1C /* Release */ = {
+		9050A1222769342300C478F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Coursera Advisor Extension/Coursera_Advisor_Extension.entitlements";
@@ -436,7 +436,7 @@
 			};
 			name = Release;
 		};
-		90A6B8CE2768A97F00CC8E1C /* Debug */ = {
+		9050A1252769342300C478F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -457,7 +457,7 @@
 			};
 			name = Debug;
 		};
-		90A6B8CF2768A97F00CC8E1C /* Release */ = {
+		9050A1262769342300C478F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -481,34 +481,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		90A6B8A42768A97D00CC8E1C /* Build configuration list for PBXProject "Coursera Advisor" */ = {
+		9050A0FB2769342100C478F7 /* Build configuration list for PBXProject "Coursera Advisor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				90A6B8C72768A97F00CC8E1C /* Debug */,
-				90A6B8C82768A97F00CC8E1C /* Release */,
+				9050A11E2769342300C478F7 /* Debug */,
+				9050A11F2769342300C478F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		90A6B8C92768A97F00CC8E1C /* Build configuration list for PBXNativeTarget "Coursera Advisor Extension" */ = {
+		9050A1202769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				90A6B8CA2768A97F00CC8E1C /* Debug */,
-				90A6B8CB2768A97F00CC8E1C /* Release */,
+				9050A1212769342300C478F7 /* Debug */,
+				9050A1222769342300C478F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		90A6B8CD2768A97F00CC8E1C /* Build configuration list for PBXNativeTarget "Coursera Advisor" */ = {
+		9050A1242769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				90A6B8CE2768A97F00CC8E1C /* Debug */,
-				90A6B8CF2768A97F00CC8E1C /* Release */,
+				9050A1252769342300C478F7 /* Debug */,
+				9050A1262769342300C478F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 90A6B8A12768A97D00CC8E1C /* Project object */;
+	rootObject = 9050A0F82769342100C478F7 /* Project object */;
 }
