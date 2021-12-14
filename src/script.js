@@ -382,6 +382,8 @@
     async function main() {
         // let url = window.location.toString()
         console.log('\n---------\n')
+        console.log('\n--- coursera advisor ---\n')
+        console.log('\n---------\n')
 
         // add google material icons
         let link = document.createElement('link')
@@ -407,10 +409,10 @@
             // double printing will display early
             // and also ensure it's there after
             if (event.target.readyState === 'interactive') {
-                console.debug(event.target.readyState)
+                // console.debug(event.target.readyState)
                 X.displayResult()
             } else if (event.target.readyState === 'complete') {
-                console.debug(event.target.readyState)
+                // console.debug(event.target.readyState)
                 X.displayResult()
             }
         });
