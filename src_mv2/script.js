@@ -1,5 +1,5 @@
 // Wraps the whole script in a closure in case the extension is called more than once
-{
+(function() {
     function extensionBadge(msg) {
         chrome.runtime.sendMessage({ text: msg }, function(response) {
             console.log("Badge Text: ", response)
@@ -410,4 +410,4 @@
     }
 
     main()
-}
+})();

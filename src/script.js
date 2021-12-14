@@ -1,8 +1,8 @@
 // Wraps the whole script in a closure in case the extension is called more than once
-{
+(function() {
     function extensionBadge(msg) {
         chrome.runtime.sendMessage({ text: msg }, function(response) {
-            console.log("Badge Text: ", response)
+            // console.log("Badge Text: ", response)
         })
     }
 
@@ -15,7 +15,7 @@
     function makeBadge(score) { return `(${score}${icon})` }
 
     // var icon = '<i class="bi bi-patch-check"></i>'
-    function makeScoreNode(type, name, message='') {
+    function makeScoreNode(type, name, message = '') {
         return `&nbsp;<span id='${makeID(type, name)}' style='display: inline-block; white-space: nowrap;'>${message}</span>`
     }
 
@@ -103,9 +103,9 @@
             let scoreNode = document.getElementById(this.ID)
             let alreadyVerified = Boolean(scoreNode) && scoreRegex.test(scoreNode.innerText)
             // if the score was already written just read it from the document            
-            return alreadyVerified ? 
-                              parseFloat(scoreRegex.exec(scoreNode.innerText)[1]).toFixed(1) 
-                            : this.getCourseScore()
+            return alreadyVerified ?
+                parseFloat(scoreRegex.exec(scoreNode.innerText)[1]).toFixed(1) :
+                this.getCourseScore()
         }
 
         async prettylog() {
@@ -117,7 +117,7 @@
             let score = await this.score
             // if span for score doesn't exist make it
             if (this.target) {
-                if(!document.getElementById(this.ID)){
+                if (!document.getElementById(this.ID)) {
                     this.target.innerHTML += makeScoreNode(this.type, this.name)
                 }
 
@@ -193,7 +193,7 @@
             this.hasReviews = !(doc.getElementsByClassName('review').length == 0 ||
                 doc.getElementsByClassName('dateOfReview').length == 0 ||
                 doc.getElementsByClassName('rating-text').length == 0)
-            console.log('this.hasReviews', this.name, this.hasReviews)
+            // console.log('this.hasReviews', this.name, this.hasReviews)
             return this.hasReviews
         }
 
@@ -247,28 +247,27 @@
 
         async Score() {
             await this.initializer()
-            
+
             let sum_reduce = (prev, curr) => prev + curr
             let scores = await Promise.all(this.courses.map(x => x.score))
             scores = scores.map(parseFloat)
-            
+
             let filtered = scores.filter(x => x > 0)
-            
+
             let sum = filtered.length > 0 ? filtered.reduce(sum_reduce) : 0
             let count = filtered.length
-    
+
             return sum > 0 ? (sum / count).toFixed(1) : -1
         }
 
         async prettylog() {
-            this.score.then((score) => {
-                console.log(this.type, this.name, score)
+            let score = await this.score
+            console.log(this.name, score)
 
-                this.courses.forEach(course => {
-                    course.score.then(x => {
-                        console.log(course.name, x)
-                    })
-                })
+            await Promise.all(this.courses.map(x => x.score)).then((scores) => {
+                for (let i = 0; i < this.names.length; i++) {
+                    console.log(this.names[i], scores[i])
+                }
             })
         }
 
@@ -278,19 +277,19 @@
             let spec = cards.shift()
 
             // setup the scoreNodes for the specialization
-            if(!document.getElementById(this.ID)){
+            if (!document.getElementById(this.ID)) {
                 this.target.innerHTML += makeScoreNode(this.type, this.name)
             }
 
             // setup the scoreNodes for the courses
-            this.courses.forEach( (course, i) => { course.target = cards[i] })
+            this.courses.forEach((course, i) => { course.target = cards[i] })
 
             let score = await this.score
             // score the specialization
             if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
-            
+
             // score the courses
-            this.courses.forEach( (course) => { course.displayResult() })
+            this.courses.forEach((course) => { course.displayResult() })
         }
 
         async getCoursesPathnames(doc) {
@@ -329,7 +328,7 @@
             this.printTo = 'ratings-text'
             let cards = Array.from(document.getElementsByClassName(this.printTo))
             // setup the scoreNodes for the courses
-            this.courses.forEach( (course, i) => { course.target = cards[i] })
+            this.courses.forEach((course, i) => { course.target = cards[i] })
         }
 
         async Score() {
@@ -347,7 +346,7 @@
         }
 
         async displayResult() {
-            this.courses.forEach( (course) => { course.displayResult() })
+            this.courses.forEach((course) => { course.displayResult() })
         }
     }
 
@@ -402,7 +401,20 @@
         // START entry point to the algorithm
         let X = discriminator(document.location.pathname)
 
-        // await X.Score()
+        document.addEventListener('readystatechange', event => {
+            // going from `interactive` to `complete` 
+            // coursera erases what had been printed
+            // double printing will display early
+            // and also ensure it's there after
+            if (event.target.readyState === 'interactive') {
+                console.debug(event.target.readyState)
+                X.displayResult()
+            } else if (event.target.readyState === 'complete') {
+                console.debug(event.target.readyState)
+                X.displayResult()
+            }
+        });
+
         X.displayResult()
         await X.prettylog()
         extensionBadge('Done')
@@ -410,4 +422,4 @@
     }
 
     main()
-}
+})();

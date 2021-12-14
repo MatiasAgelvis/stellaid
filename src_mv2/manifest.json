@@ -9,6 +9,7 @@
     "optional_permissions": [
         "https://www.coursera.org/"
     ],
+    
     "browser_action":
     {
         "default_title": "Click to get adjusted scores for the courses on this tab.",
@@ -22,8 +23,14 @@
     },
     "background":
     {
-        "service_worker": "background.js"
+        "scripts": [ "background.js" ]
     },
+    
+    "content_scripts": [{
+        "js": [ "script.js" ],
+        "matches": [ "https://www.coursera.org/" ]
+    }],
+    
     "icons":
     {
         "16": "/images/logo_16.png",
