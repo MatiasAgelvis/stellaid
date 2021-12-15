@@ -1,12 +1,12 @@
 {
     "name": "Coursera Advisor",
     "description": "Get accurate ratings in Coursera",
-    "version": "1.1",
+    "version": "1.2",
     "manifest_version": 2,
     "permissions": [
         "scripting"
     ],
-    "optional_permissions": [
+    "host_permissions": [
         "https://www.coursera.org/"
     ],
     
@@ -27,8 +27,7 @@
     },
     
     "content_scripts": [{
-        "js": [ "script.js" ],
-        "matches": [ "https://www.coursera.org/" ]
+        "js": [ "script.js" ]
     }],
     
     "icons":

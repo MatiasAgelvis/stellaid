@@ -107,9 +107,9 @@
 				9050A1032769342100C478F7 /* Coursera_Advisor.entitlements */,
 				9050A1042769342100C478F7 /* AppDelegate.swift */,
 				9050A1062769342100C478F7 /* Main.storyboard */,
+				9050A10D2769342200C478F7 /* Info.plist */,
 				9050A1092769342100C478F7 /* ViewController.swift */,
 				9050A10B2769342200C478F7 /* Assets.xcassets */,
-				9050A10D2769342200C478F7 /* Info.plist */,
 			);
 			path = "Coursera Advisor";
 			sourceTree = "<group>";
