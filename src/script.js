@@ -320,13 +320,30 @@
     // ------------------------------------- class Search
     class Search {
         constructor() {
-            this.results = Array.from(document.getElementsByClassName('result-title-link'))
-            this.names = this.results.map(x => x.pathname)
-            this.courses = this.names.map(discriminator)
-            this.printTo = 'ratings-text'
-            let cards = Array.from(document.getElementsByClassName(this.printTo))
-            // setup the scoreNodes for the courses
-            this.courses.forEach((course, i) => { course.target = cards[i] })
+            return (async () => {
+                this.results = await this.pageResults()
+                console.debug(this.results)
+                this.names = this.results.map(x => x.pathname)
+                this.courses = this.names.map(discriminator)
+                this.printTo = 'ratings-text'
+                let cards = Array.from(document.getElementsByClassName(this.printTo))
+                // setup the scoreNodes for the courses
+                this.courses.forEach((course, i) => { course.target = cards[i] })
+
+                return this;
+            })();
+        }
+
+        async pageResults(){
+            let results = Array.from(document.getElementsByClassName('result-title-link'))
+            while (results === undefined || results.length == 0) {
+                await sleep(1500)
+                // without this it would pick up the name of the placeholders
+                if (document.readyState === 'complete') {
+                    results = Array.from(document.getElementsByClassName('result-title-link'))
+                }
+            }
+            return results
         }
 
         async Score() {
@@ -379,9 +396,9 @@
     // current page
     async function main() {
         // let url = window.location.toString()
-        console.log('\n---------\n')
-        console.log('\n--- coursera advisor ---\n')
-        console.log('\n---------\n')
+        console.log('------------------------\n')
+        console.log('--- Coursera Advisor ---\n')
+        console.log('------------------------\n')
 
         // add google material icons
         let link = document.createElement('link')
@@ -398,8 +415,11 @@
         document.head.appendChild(styleSheet)
 
 
-        // START entry point to the algorithm
-        let X = discriminator(document.location.pathname)
+        // ----- START HERE ------
+        // only here discriminator is used with await
+        // beacuse this is the only point
+        // where a search object can be returned
+        let X = await discriminator(document.location.pathname)
 
         document.addEventListener('readystatechange', event => {
             // going from `interactive` to `complete` 
@@ -421,5 +441,10 @@
 
     }
 
-    main()
+    if (document.readyState === "complete") {
+        // Fully loaded!
+        main()
+    } else {
+        document.addEventListener('readystatechange', event => { main() })
+    }
 })();

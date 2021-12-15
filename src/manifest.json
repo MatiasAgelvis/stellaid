@@ -27,7 +27,8 @@
     },
     
     "content_scripts": [{
-        "js": [ "script.js" ]
+        "js": [ "script.js" ],
+        "matches": [ "https://www.coursera.org/*" ]
     }],
     
     "icons":
