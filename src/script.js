@@ -275,8 +275,10 @@
             let score = await this.score
 
             // setup the scoreNodes for the specialization
-            if (!document.getElementById(this.ID)) {
-                this.target.innerHTML += makeScoreNode(this.type, this.name)
+            if(this.target) {
+                if (!document.getElementById(this.ID)) {
+                    this.target.innerHTML += makeScoreNode(this.type, this.name)
+                }
             }
 
             // setup the scoreNodes for the courses
@@ -300,7 +302,7 @@
             // either way the script that reveals the whole list was not loading in time
             if (showButton && showButton.innerText == 'Show More' &&
                 isCurrentFile(joinPaths(this.type, this.name))) {
-                await sleep(100)
+                await sleep(500)
                 showButton.click()
             }
 
@@ -419,31 +421,20 @@
         // beacuse this is the only point
         // where a search object can be returned
         let X = await discriminator(document.location.pathname)
-
-        document.addEventListener('readystatechange', event => {
-            // going from `interactive` to `complete` 
-            // coursera erases what had been printed
-            // double printing will display early
-            // and also ensure it's there after
-            if (event.target.readyState === 'interactive') {
-                // console.debug(event.target.readyState)
-                X.displayResult()
-            } else if (event.target.readyState === 'complete') {
-                // console.debug(event.target.readyState)
-                X.displayResult()
-            }
-        });
-
+        
         X.displayResult()
         await X.prettylog()
         extensionBadge('Done')
 
+        // to make sure that a layout reflow won't erase the scores
+        // for 20s will check if that the score is still there
+        for (var i = 20 - 1; i >= 0; i--) {
+            await sleep(1000)
+            X.displayResult()
+        }
     }
 
-    if (document.readyState === "complete") {
-        // Fully loaded!
-        main()
-    } else {
-        document.addEventListener('readystatechange', event => { main() })
-    }
+    if (document.readyState === "complete") { main() }
+    else { document.addEventListener('readystatechange', event => { main() }) }
+
 })();
