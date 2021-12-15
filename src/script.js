@@ -270,9 +270,9 @@
         }
 
         async displayResult() {
-            await this.Score()
             let cards = Array.from(document.getElementsByClassName(this.printTo))
             let spec = cards.shift()
+            let score = await this.score
 
             // setup the scoreNodes for the specialization
             if (!document.getElementById(this.ID)) {
@@ -282,7 +282,6 @@
             // setup the scoreNodes for the courses
             this.courses.forEach((course, i) => { course.target = cards[i] })
 
-            let score = await this.score
             // score the specialization
             if (score >= 0) { document.getElementById(this.ID).innerHTML = makeBadge(score) }
 
