@@ -10,7 +10,7 @@ import SafariServices.SFSafariApplication
 import SafariServices.SFSafariExtensionManager
 
 let appName = "Coursera Advisor"
-let extensionBundleIdentifier = "com.yourCompany.Coursera-Advisor.Extension"
+let extensionBundleIdentifier = "com.MatiasAgelvis.Coursera-Advisor.Extension"
 
 class ViewController: NSViewController {
 
@@ -46,6 +46,11 @@ class ViewController: NSViewController {
                 NSApplication.shared.terminate(nil)
             }
         }
+    }
+    
+    @IBAction func openURL(_ sender: AnyObject) {
+        let url = URL(string: "https://matiasagelvis.com/CourseraAdvisor")
+        NSWorkspace.shared.open(url!)
     }
 
 }
