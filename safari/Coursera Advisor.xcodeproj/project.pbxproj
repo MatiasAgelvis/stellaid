@@ -14,10 +14,10 @@
 		9050A1132769342300C478F7 /* Coursera Advisor Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9050A1182769342300C478F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9050A1172769342300C478F7 /* Cocoa.framework */; };
 		9050A11B2769342300C478F7 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */; };
-		9050A12C2769342400C478F7 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 9050A1282769342400C478F7 /* background.js */; };
-		9050A12D2769342400C478F7 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 9050A1292769342400C478F7 /* images */; };
-		9050A12E2769342400C478F7 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 9050A12A2769342400C478F7 /* script.js */; };
-		9050A12F2769342400C478F7 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 9050A12B2769342400C478F7 /* manifest.json */; };
+		905D7D34276C0824000C5F86 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D30276C0824000C5F86 /* manifest.json */; };
+		905D7D35276C0824000C5F86 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D31276C0824000C5F86 /* background.js */; };
+		905D7D36276C0824000C5F86 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D32276C0824000C5F86 /* script.js */; };
+		905D7D37276C0824000C5F86 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D33276C0824000C5F86 /* images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,10 +57,10 @@
 		9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		9050A11C2769342300C478F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9050A11D2769342300C478F7 /* Coursera_Advisor_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor_Extension.entitlements; sourceTree = "<group>"; };
-		9050A1282769342400C478F7 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../src/background.js; sourceTree = "<group>"; };
-		9050A1292769342400C478F7 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../src/images; sourceTree = "<group>"; };
-		9050A12A2769342400C478F7 /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = script.js; path = ../../src/script.js; sourceTree = "<group>"; };
-		9050A12B2769342400C478F7 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../src/manifest.json; sourceTree = "<group>"; };
+		905D7D30276C0824000C5F86 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest.json; path = ../../src_mv2/manifest.json; sourceTree = "<group>"; };
+		905D7D31276C0824000C5F86 /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../src_mv2/background.js; sourceTree = "<group>"; };
+		905D7D32276C0824000C5F86 /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = script.js; path = ../../src_mv2/script.js; sourceTree = "<group>"; };
+		905D7D33276C0824000C5F86 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../src_mv2/images; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,10 +136,10 @@
 		9050A1272769342400C478F7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9050A1282769342400C478F7 /* background.js */,
-				9050A1292769342400C478F7 /* images */,
-				9050A12A2769342400C478F7 /* script.js */,
-				9050A12B2769342400C478F7 /* manifest.json */,
+				905D7D31276C0824000C5F86 /* background.js */,
+				905D7D33276C0824000C5F86 /* images */,
+				905D7D30276C0824000C5F86 /* manifest.json */,
+				905D7D32276C0824000C5F86 /* script.js */,
 			);
 			name = Resources;
 			path = "Coursera Advisor Extension";
@@ -234,10 +234,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9050A12F2769342400C478F7 /* manifest.json in Resources */,
-				9050A12D2769342400C478F7 /* images in Resources */,
-				9050A12E2769342400C478F7 /* script.js in Resources */,
-				9050A12C2769342400C478F7 /* background.js in Resources */,
+				905D7D37276C0824000C5F86 /* images in Resources */,
+				905D7D35276C0824000C5F86 /* background.js in Resources */,
+				905D7D36276C0824000C5F86 /* script.js in Resources */,
+				905D7D34276C0824000C5F86 /* manifest.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
