@@ -1,0 +1,522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9050A1052769342100C478F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A1042769342100C478F7 /* AppDelegate.swift */; };
+		9050A1082769342100C478F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9050A1062769342100C478F7 /* Main.storyboard */; };
+		9050A10A2769342100C478F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A1092769342100C478F7 /* ViewController.swift */; };
+		9050A10C2769342200C478F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9050A10B2769342200C478F7 /* Assets.xcassets */; };
+		9050A1132769342300C478F7 /* Coursera Advisor Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9050A1182769342300C478F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9050A1172769342300C478F7 /* Cocoa.framework */; };
+		9050A11B2769342300C478F7 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */; };
+		905D7D34276C0824000C5F86 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D30276C0824000C5F86 /* manifest.json */; };
+		905D7D35276C0824000C5F86 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D31276C0824000C5F86 /* background.js */; };
+		905D7D36276C0824000C5F86 /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D32276C0824000C5F86 /* script.js */; };
+		905D7D37276C0824000C5F86 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 905D7D33276C0824000C5F86 /* images */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9050A1142769342300C478F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9050A0F82769342100C478F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9050A1112769342300C478F7;
+			remoteInfo = "Coursera Advisor Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9050A1232769342300C478F7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9050A1132769342300C478F7 /* Coursera Advisor Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9050A1002769342100C478F7 /* Coursera Advisor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coursera Advisor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9050A1032769342100C478F7 /* Coursera_Advisor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor.entitlements; sourceTree = "<group>"; };
+		9050A1042769342100C478F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9050A1072769342100C478F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9050A1092769342100C478F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9050A10B2769342200C478F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9050A10D2769342200C478F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Coursera Advisor Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9050A1172769342300C478F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		9050A11C2769342300C478F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9050A11D2769342300C478F7 /* Coursera_Advisor_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coursera_Advisor_Extension.entitlements; sourceTree = "<group>"; };
+		905D7D30276C0824000C5F86 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest.json; path = ../../src_mv2/manifest.json; sourceTree = "<group>"; };
+		905D7D31276C0824000C5F86 /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../src_mv2/background.js; sourceTree = "<group>"; };
+		905D7D32276C0824000C5F86 /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = script.js; path = ../../src_mv2/script.js; sourceTree = "<group>"; };
+		905D7D33276C0824000C5F86 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../src_mv2/images; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9050A0FD2769342100C478F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9050A10F2769342300C478F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9050A1182769342300C478F7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9050A0F72769342100C478F7 = {
+			isa = PBXGroup;
+			children = (
+				9050A1022769342100C478F7 /* Coursera Advisor */,
+				9050A1192769342300C478F7 /* Coursera Advisor Extension */,
+				9050A1162769342300C478F7 /* Frameworks */,
+				9050A1012769342100C478F7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9050A1012769342100C478F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9050A1002769342100C478F7 /* Coursera Advisor.app */,
+				9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9050A1022769342100C478F7 /* Coursera Advisor */ = {
+			isa = PBXGroup;
+			children = (
+				9050A1032769342100C478F7 /* Coursera_Advisor.entitlements */,
+				9050A1042769342100C478F7 /* AppDelegate.swift */,
+				9050A1062769342100C478F7 /* Main.storyboard */,
+				9050A10D2769342200C478F7 /* Info.plist */,
+				9050A1092769342100C478F7 /* ViewController.swift */,
+				9050A10B2769342200C478F7 /* Assets.xcassets */,
+			);
+			path = "Coursera Advisor";
+			sourceTree = "<group>";
+		};
+		9050A1162769342300C478F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9050A1172769342300C478F7 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9050A1192769342300C478F7 /* Coursera Advisor Extension */ = {
+			isa = PBXGroup;
+			children = (
+				9050A1272769342400C478F7 /* Resources */,
+				9050A11A2769342300C478F7 /* SafariWebExtensionHandler.swift */,
+				9050A11C2769342300C478F7 /* Info.plist */,
+				9050A11D2769342300C478F7 /* Coursera_Advisor_Extension.entitlements */,
+			);
+			path = "Coursera Advisor Extension";
+			sourceTree = "<group>";
+		};
+		9050A1272769342400C478F7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				905D7D31276C0824000C5F86 /* background.js */,
+				905D7D33276C0824000C5F86 /* images */,
+				905D7D30276C0824000C5F86 /* manifest.json */,
+				905D7D32276C0824000C5F86 /* script.js */,
+			);
+			name = Resources;
+			path = "Coursera Advisor Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9050A0FF2769342100C478F7 /* Coursera Advisor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9050A1242769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor" */;
+			buildPhases = (
+				9050A0FC2769342100C478F7 /* Sources */,
+				9050A0FD2769342100C478F7 /* Frameworks */,
+				9050A0FE2769342100C478F7 /* Resources */,
+				9050A1232769342300C478F7 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9050A1152769342300C478F7 /* PBXTargetDependency */,
+			);
+			name = "Coursera Advisor";
+			productName = "Coursera Advisor";
+			productReference = 9050A1002769342100C478F7 /* Coursera Advisor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9050A1112769342300C478F7 /* Coursera Advisor Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9050A1202769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor Extension" */;
+			buildPhases = (
+				9050A10E2769342300C478F7 /* Sources */,
+				9050A10F2769342300C478F7 /* Frameworks */,
+				9050A1102769342300C478F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Coursera Advisor Extension";
+			productName = "Coursera Advisor Extension";
+			productReference = 9050A1122769342300C478F7 /* Coursera Advisor Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9050A0F82769342100C478F7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					9050A0FF2769342100C478F7 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					9050A1112769342300C478F7 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = 9050A0FB2769342100C478F7 /* Build configuration list for PBXProject "Coursera Advisor" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9050A0F72769342100C478F7;
+			productRefGroup = 9050A1012769342100C478F7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9050A0FF2769342100C478F7 /* Coursera Advisor */,
+				9050A1112769342300C478F7 /* Coursera Advisor Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9050A0FE2769342100C478F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9050A10C2769342200C478F7 /* Assets.xcassets in Resources */,
+				9050A1082769342100C478F7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9050A1102769342300C478F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				905D7D37276C0824000C5F86 /* images in Resources */,
+				905D7D35276C0824000C5F86 /* background.js in Resources */,
+				905D7D36276C0824000C5F86 /* script.js in Resources */,
+				905D7D34276C0824000C5F86 /* manifest.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9050A0FC2769342100C478F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9050A10A2769342100C478F7 /* ViewController.swift in Sources */,
+				9050A1052769342100C478F7 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9050A10E2769342300C478F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9050A11B2769342300C478F7 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9050A1152769342300C478F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9050A1112769342300C478F7 /* Coursera Advisor Extension */;
+			targetProxy = 9050A1142769342300C478F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9050A1062769342100C478F7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9050A1072769342100C478F7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9050A11E2769342300C478F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9050A11F2769342300C478F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		9050A1212769342300C478F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Coursera Advisor Extension/Coursera_Advisor_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NLJN87MZ77;
+				INFOPLIST_FILE = "Coursera Advisor Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MatiasAgelvis.Coursera-Advisor.Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9050A1222769342300C478F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Coursera Advisor Extension/Coursera_Advisor_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NLJN87MZ77;
+				INFOPLIST_FILE = "Coursera Advisor Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MatiasAgelvis.Coursera-Advisor.Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		9050A1252769342300C478F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Coursera Advisor/Coursera_Advisor.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = NLJN87MZ77;
+				INFOPLIST_FILE = "Coursera Advisor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MatiasAgelvis.Coursera-Advisor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9050A1262769342300C478F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Coursera Advisor/Coursera_Advisor.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = NLJN87MZ77;
+				INFOPLIST_FILE = "Coursera Advisor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MatiasAgelvis.Coursera-Advisor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9050A0FB2769342100C478F7 /* Build configuration list for PBXProject "Coursera Advisor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9050A11E2769342300C478F7 /* Debug */,
+				9050A11F2769342300C478F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9050A1202769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9050A1212769342300C478F7 /* Debug */,
+				9050A1222769342300C478F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9050A1242769342300C478F7 /* Build configuration list for PBXNativeTarget "Coursera Advisor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9050A1252769342300C478F7 /* Debug */,
+				9050A1262769342300C478F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9050A0F82769342100C478F7 /* Project object */;
+}
