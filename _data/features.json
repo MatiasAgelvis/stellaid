@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Time Saver",
+    "description": "Starithm saves you from reading hundreds of reviews.",
+    "image": {
+      "url": "images/features/clock.png",
+      "width": 80,
+      "height": 80
+    }
+  },
+  {
+    "title": "Open Source",
+    "description": "The code is open and free to read and modify by anyone.",
+    "image": {
+      "url": "images/features/people.png",
+      "width": 80,
+      "height": 80
+    }
+  },
+  {
+    "title": "Works on many pages",
+    "description": "Starithm can value the reviews from multiple websites.",
+    "image": {
+      "url": "images/features/bookmark.png",
+      "width": 80,
+      "height": 80
+    }
+  },
+  {
+    "title": "Verification Algorithm",
+    "description": "The algorithm values each review uniquely to generate the most accurate score.",
+    "image": {
+      "url": "images/features/verified.png",
+      "width": 80,
+      "height": 80
+    }
+  }
+]

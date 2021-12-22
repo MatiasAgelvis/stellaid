@@ -1,0 +1,30 @@
+main:
+  - name: "Pages"
+    url: "/services/"
+    weight: 2
+  - name: "Download"
+    url: "/download/"
+    weight: 3
+  - name: "Team"
+    url: "/team/"
+    weight: 4
+  - name: "How it Works"
+    url: "/how_it_works/"
+    weight: 5
+  - name: "FAQ"
+    url: "/FAQ/"
+    weight: 6
+
+footer:
+  - name: "Home"
+    url: "/"
+    weight: 1
+  - name: "Download"
+    url: "/download/"
+    weight: 2
+  - name: "FAQ"
+    url: "/FAQ/"
+    weight: 3
+  - name: "Contact"
+    url: "/contact/"
+    weight: 4
