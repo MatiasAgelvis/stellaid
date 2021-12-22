@@ -178,3 +178,15 @@ DerivedData/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,python
+
+
+# Created by https://www.toptal.com/developers/gitignore/api/jekyll
+# Edit at https://www.toptal.com/developers/gitignore?templates=jekyll
+
+### Jekyll ###
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# End of https://www.toptal.com/developers/gitignore/api/jekyll
