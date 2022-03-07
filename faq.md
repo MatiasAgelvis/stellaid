@@ -1,9 +1,19 @@
 ---
 title: FAQ
 layout: page
-description: Starithm helps you find the quality reviews and conftrably summarize them into a single value.
-intro_image: "images/illustrations/use.png"
-intro_image_absolute: flase
-intro_image_hide_on_mobile: true
-show_call_box: false
+description: Stellaid helps you find the quality reviews and comfortably summarize them into a single value.
 ---
+
+## How do I use the browser extension?
+
+You don't have to, the extension jumps into action as soon as it finds a star review on the page.
+
+
+## Is it free?
+
+Totally.
+
+
+## How can I support the development?
+
+Donating here [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N56KOTY) 💟 Thanks!
