@@ -1,7 +1,7 @@
 ---
 title: Contact
 layout: contact
-description: Starithm helps you find the quality reviews and conftrably summarize them into a single value.
+description: Stellaid helps you find the quality reviews and comfortably summarize them into a single value.
 ---
 
 <form 
@@ -9,7 +9,7 @@ description: Starithm helps you find the quality reviews and conftrably summariz
   method="POST">
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" class="form-control" placeholder="Enter an email to reach back" id="email">
+    <input type="email" class="form-control" placeholder="Enter your email" id="email">
   </div>
   <div class="form-group">
     <label for="name">Name:</label>

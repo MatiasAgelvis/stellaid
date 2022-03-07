@@ -1,7 +1,7 @@
 ---
 title: Pages
 layout: services
-description: Starithm helps you find the quality reviews and conftrably summarize them into a single value.
+description: Starithm helps you find the quality reviews and comfortably summarize them into a single value.
 intro_image: "images/illustrations/apps.png"
 intro_image_absolute: true
 intro_image_hide_on_mobile: true
