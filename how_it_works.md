@@ -1,52 +1,25 @@
 ---
 title: How it Works
 layout: page
-description: Starithm helps you find the quality reviews and conftrably summarize them into a single value.
+description: Stellaid helps you find the quality reviews and comfortably summarize them into a single value.
 bodyClass: page-about
 ---
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
-Lorem markdownum aequalis strigis. _Saetigeri iubeas_, vultu huic alvum nondum
-de obside ut laniavit arbor palmis, cum quin. Rupes vetat videndo, armigerae
-crimen habet Priamum nec.
+Stellaid helps you find the quality reviews and comfortably summarize them into a single value.
 
-## Ne verba patulosque numen vix libet
+## Coursera
 
-Agitabitur signa lympha; non lacunae, mox cum tumulis quoque triste dictis.
-Ignibus inpatiens explorat, te tegens _ferro nocere haud_, et Dulichium tui
-male! Quo sed [fuit flexit et](#vexant-achivi) hic die solido, gloria?
 
-1. Cum det dixit Parcarum qui spemque est
-2. Exit ex huic
-3. Quod consiste agitataque claustraque vicina videt lacertis
-4. Loquor videt
-5. Ardua non igne caelesti coniugis cognovi diversorum
-6. Per nunc pariterque saeva vindicet
+In Coursera, the browser extension constantly monitors you window to spot star ratings associated with courses, projects, specializations, or professional certificates, the extension inspects the review pages of each one, where it extracts the stars given in the review as well as the date and the number of people that have found that review useful, if you are a new like me i’ll put the equations below
 
-Locus evicit loquuntur Tyrrhena omnes, obstipui pugnabant temptavit Phoco _vati_
-dabant deus. Memorata haberet sepulcrales gentisque dum sic, in flumina templa!
-Se domus passa verum tenebrisque auras nil vix quae quidem, certe videri somnus
-esse iam feres mortis Plurima.
+$$ \alpha = \sum_{i=0}^{24} \frac{(\#\ stars\ given\ in\ review\ i)\cdot(\#\ likes\ of\ review\ i)^2}{(age\ of\ review\ i)^3} $$
 
-## Postquam tamen
+$$ \beta = \sum_{i=0}^{24} \frac{(\#\ likes\ of\ review\ i)^2}{(age\ of\ review\ i)^3} $$
 
-Et nec ingentem est minus faciunt praecipue posse auctoremque sedes transmittere
-et pedes miratur erat animaeque. Tellus admonuit humanam funes, sagittis et
-licet! Inserui quamvis Clymeni.
+$$ \gamma = \frac{\alpha}{\beta} $$
 
-- Parens est studiisque interea
-- Pro istis mediis carnes iste nec imperat
-- Te vocas orat nisi quantumque castra
-- Gestumque crepuscula esse videntur coegit
-- Ambo videtque gerat aquae ferens vagina
-- Adde leviter faciam tetigisse regunt concava in
 
-Superi monilia omnes Cyprio Scylla cibos punica quae succincta pallent de
-incubat hostes montibus, de moderato efficiet vulnere. Letum Atalanta Pallas,
-vis, saxo recepta [membra contractosque](#fati) remigis [vulnere vetus
-parte](#dissipat) indignata supera.
+Basically it's a weighted average in function of the review age and peer support, In the case of courses and projects that value is the final result, for specializations and professional certificates this process is applied to each of its constituent courses and averaged.
 
-Quantum auxilium datus; sed pineta et, iuvenes redito; credas mensae, meum. Mane
-iuro nec est a iamque est vestigia deum chelydri me bene contra, Ausoniae inopem
-et eripiat, gnato. Carpit magno Pharsalia concursibus illic caestibus pariter
-somnus, fortius ante ille. Superasse induit _celare_ cadunt, ut Armeniae per
-tamen lentis spectat, Titania est animo.
+Finally the resulting value is then printed to the right of the original value for you to consider.
