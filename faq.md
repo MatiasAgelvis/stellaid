@@ -1,6 +1,5 @@
 ---
-title: FAQ
-permalink: /FAQ/
+title: Faq
 layout: page
 description: Stellaid helps you find the quality reviews and comfortably summarize them into a single value.
 ---
