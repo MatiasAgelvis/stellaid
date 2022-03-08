@@ -1,7 +1,7 @@
 [
   {
     "title": "Time Saver",
-    "description": "Starithm saves you from reading hundreds of reviews.",
+    "description": "Stellaid saves you from reading hundreds of reviews.",
     "image": {
       "url": "images/features/clock.png",
       "width": 80,
@@ -19,7 +19,7 @@
   },
   {
     "title": "Works on many pages",
-    "description": "Starithm can value the reviews from multiple websites.",
+    "description": "Stellaid can value the reviews from multiple websites.",
     "image": {
       "url": "images/features/bookmark.png",
       "width": 80,
