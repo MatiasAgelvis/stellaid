@@ -1,5 +1,5 @@
 ---
-title: Faq
+title: FAQ
 permalink: /FAQ/
 layout: page
 description: Stellaid helps you find the quality reviews and comfortably summarize them into a single value.
