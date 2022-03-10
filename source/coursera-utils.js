@@ -10,6 +10,9 @@ makeScoreNode = function(type, name, message = '') {
 }
 // var makeScoreNode = exports.makeScoreNode
 
+fetchPage = function(...paths){
+    return utils.fetchPage('https://www.coursera.org', ...paths)
+}
 
 // ------------------------------------- class Course
 exports.Course = class {

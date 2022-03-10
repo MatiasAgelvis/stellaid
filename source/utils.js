@@ -74,12 +74,12 @@ exports.isCurrentFile = function(pathname) {
 }
 var isCurrentFile = exports.isCurrentFile
 
-exports.fetchPage = async function(...paths) {
+exports.fetchPage = async function(domain, ...paths) {
     // given a course name will return 
     // the parsed doc of the review page for the course
 
     let pathname = joinPaths(...paths)
-    let url = 'https://www.coursera.org' + pathname
+    let url = domain + pathname
 
     // prevents fetching of the current document
     if (isCurrentFile(pathname)) {
