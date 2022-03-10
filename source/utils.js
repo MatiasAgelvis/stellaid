@@ -132,6 +132,10 @@ exports.joinPaths = function(...paths) {
 
 var joinPaths = exports.joinPaths
 
+exports.isCurrentFile = function(pathname) {
+    return pathname == document.location.pathname
+}
+
 /*////////////////////////////
 //
 //  PROMISES
