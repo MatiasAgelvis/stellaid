@@ -10,8 +10,9 @@ makeScoreNode = function(type, name, message = '') {
 }
 // var makeScoreNode = exports.makeScoreNode
 
+var origin = document.location.origin
 fetchPage = function(...paths){
-    return utils.fetchPage('https://www.coursera.org', ...paths)
+    return utils.fetchPage(origin, ...paths)
 }
 
 // ------------------------------------- class Course
@@ -263,7 +264,7 @@ exports.Specialization = class {
         // console.log(pathnames)
 
         // prepare path names
-        return pathnames.map(x => utils.splitPathname(x)[1])
+        return pathnames.map(x => utils.splitSelect(x, [1,2])[1])
     }
 }
 var Specialization = exports.Specialization
@@ -273,7 +274,7 @@ exports.Search = class {
     constructor() {
         return (async () => {
             this.results = await this.pageResults()
-            console.debug(this.results)
+            // console.debug(this.results)
             this.names = this.results.map(x => x.pathname)
             this.courses = this.names.map(discriminator)
             let cards = Array.from(document.getElementsByClassName('ratings-text'))
@@ -323,7 +324,7 @@ exports.Search = class {
 var Search = exports.Search
 
 exports.discriminator = function (pathname) {
-    [type, name] = utils.splitPathname(pathname)
+    [type, name] = utils.splitSelect(pathname, [1,2])
 
     switch (type) {
         case 'search':
