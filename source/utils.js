@@ -1,27 +1,25 @@
+const fetch = require('cross-fetch');
+
 /*////////////////////////////
 //
 //    STYLES
 //
-*/////////////////////////////
+*/ ////////////////////////////
 
 // appends google materia icons, specially the verified icon
+// substitute with the svg of the only icon that is used
 exports.addIcons = function() {
-    // add google material icons
     let link = document.createElement('link')
     link.rel = 'stylesheet'
     link.href = "https://fonts.googleapis.com/icon?family=Material+Icons"
     document.head.appendChild(link)
 }
 
-
-
-
-
 /*////////////////////////////
 //
 //  BADGE
 //
-*/////////////////////////////
+*/ ////////////////////////////
 
 // make the ID of the span what will eventually contain the score
 exports.makeID = function(page, type, name) {
@@ -38,28 +36,7 @@ var icon = '<i style=\'font-size: inherit; line-height: unset; vertical-align: b
 
 // returns the HTML of the score badge
 exports.makeBadge = function(score) {
-    return `(${score}${icon})`
-}
-
-
-/*////////////////////////////
-//
-//  ARRAYS
-//
-*/////////////////////////////
-
-
-exports.zip = function(arrays) {
-    return arrays[0].map(function(_, i) {
-        return arrays.map(function(array) {
-            return array[i]
-        })
-    })
-}
-
-// returns the last element of the given array
-exports.last = function(array) {
-    return array[array.length - 1]
+    return `(${score.toFixed(1)}${icon})`
 }
 
 
@@ -67,7 +44,7 @@ exports.last = function(array) {
 //
 //  REQUESTS
 //
-*/////////////////////////////
+*/ ////////////////////////////
 
 exports.isCurrentFile = function(pathname) {
     return pathname == document.location.pathname
@@ -79,7 +56,7 @@ exports.fetchPage = async function(domain, ...paths) {
     // the parsed doc of the review page for the course
 
     let pathname = joinPaths(...paths)
-    let url = domain + pathname
+    let url = new URL(pathname, domain)
 
     // prevents fetching of the current document
     if (isCurrentFile(pathname)) {
@@ -104,7 +81,7 @@ exports.fetchPage = async function(domain, ...paths) {
 //
 //  REGEX
 //
-*/////////////////////////////
+*/ ////////////////////////////
 
 exports.scoreRegex = /\((\d\.?\d)verified\)/
 
@@ -120,32 +97,27 @@ exports.regexCount = function(str, pattern) {
 //
 //  PATHS
 //
-*/////////////////////////////
+*/ ////////////////////////////
 
-exports.splitPathname = function(pathname) {
-    return [pathname.split('/')[1], pathname.split('/')[2]]
+exports.splitSelect = function(string, index = [1, 2], delimiter = '/') {
+    let splited = string.split(delimiter)
+    return index.map(i => splited[i])
 }
 
 exports.joinPaths = function(...paths) {
     return '/' + [...paths].join('/')
 }
-
 var joinPaths = exports.joinPaths
-
-exports.isCurrentFile = function(pathname) {
-    return pathname == document.location.pathname
-}
 
 /*////////////////////////////
 //
 //  PROMISES
 //
-*/////////////////////////////
+*/ ////////////////////////////
 
 
 exports.sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-
-exports.promisify = f => (...args) => new Promise((res, rej) => f(...args, (err, data) => err ? rej(err) : res(data)))
+// exports.promisify = f => (...args) => new Promise((res, rej) => f(...args, (err, data) => err ? rej(err) : res(data)))
