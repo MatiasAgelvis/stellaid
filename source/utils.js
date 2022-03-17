@@ -48,8 +48,11 @@ exports.makeBadge = function(score) {
 */ ///////////////////////////
 
 exports.fetchPage = async function(domain, ...paths) {
-    // given a course name will return 
-    // the parsed doc of the review page for the course
+
+    if (!domain.startsWith('https://') && !domain.startsWith('http://')) {
+        domain = `https://${domain}`
+    }
+
     let url = new URL(urljoin(...paths), domain)
 
     // prevents fetching of the current document
@@ -79,7 +82,6 @@ exports.fetchPage = async function(domain, ...paths) {
 
 exports.scoreRegex = /\((\d\.?\d)verified\)/
 
-
 exports.regexCount = function(str, pattern) {
     // returns the number of marches of a pattern in a string
     let re = RegExp(pattern, 'g')
@@ -108,5 +110,3 @@ exports.splitSelect = function(string, index = [1, 2], delimiter = '/') {
 exports.sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
-
-// exports.promisify = f => (...args) => new Promise((res, rej) => f(...args, (err, data) => err ? rej(err) : res(data)))
