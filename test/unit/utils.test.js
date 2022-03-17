@@ -33,12 +33,6 @@ describe('Utilities', () => {
         expect(utils.splitSelect(string, [4])).toBeUndefined
     })
 
-    test('joinPaths: join an arbitrary number of paths', () => {
-        expect(utils.joinPaths()).toEqual('/')
-        expect(utils.joinPaths('a')).toEqual('/a')
-        expect(utils.joinPaths('a', 'b')).toEqual('/a/b')
-    })
-
     test('makeBagde: return a score and an <i> element', () => {
         score = 5.0
         expect(utils.makeBadge(score)).toMatch(/<i.*class="material-icons".*>verified<\/i>/)

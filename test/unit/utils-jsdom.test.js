@@ -6,10 +6,6 @@ const utils = require('../../source/utils.js');
 
 describe('Utilities', () => {
 
-    test('isCurrentFile: Detects the current pathname', () => {
-        expect(utils.isCurrentFile(document.location.pathname)).toBeTruthy
-    })
-
     test('fetchFile: fetches the current document HTML', async () => {
 
         let doc = await utils.fetchPage('example.com', 'page')

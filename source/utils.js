@@ -1,10 +1,11 @@
 const fetch = require('cross-fetch');
+var urljoin = require('url-join');
 
 /*////////////////////////////
 //
 //    STYLES
 //
-*/ ////////////////////////////
+*/ ///////////////////////////
 
 // appends google materia icons, specially the verified icon
 // substitute with the svg of the only icon that is used
@@ -19,7 +20,7 @@ exports.addIcons = function() {
 //
 //  BADGE
 //
-*/ ////////////////////////////
+*/ ///////////////////////////
 
 // make the ID of the span what will eventually contain the score
 exports.makeID = function(page, type, name) {
@@ -44,22 +45,15 @@ exports.makeBadge = function(score) {
 //
 //  REQUESTS
 //
-*/ ////////////////////////////
-
-exports.isCurrentFile = function(pathname) {
-    return pathname == document.location.pathname
-}
-var isCurrentFile = exports.isCurrentFile
+*/ ///////////////////////////
 
 exports.fetchPage = async function(domain, ...paths) {
     // given a course name will return 
     // the parsed doc of the review page for the course
-
-    let pathname = joinPaths(...paths)
-    let url = new URL(pathname, domain)
+    let url = new URL(urljoin(...paths), domain)
 
     // prevents fetching of the current document
-    if (isCurrentFile(pathname)) {
+    if (url == document.location.href) {
         return document
     }
 
@@ -81,7 +75,7 @@ exports.fetchPage = async function(domain, ...paths) {
 //
 //  REGEX
 //
-*/ ////////////////////////////
+*/ ///////////////////////////
 
 exports.scoreRegex = /\((\d\.?\d)verified\)/
 
@@ -97,23 +91,18 @@ exports.regexCount = function(str, pattern) {
 //
 //  PATHS
 //
-*/ ////////////////////////////
+*/ ///////////////////////////
 
 exports.splitSelect = function(string, index = [1, 2], delimiter = '/') {
     let splited = string.split(delimiter)
     return index.map(i => splited[i])
 }
 
-exports.joinPaths = function(...paths) {
-    return '/' + [...paths].join('/')
-}
-var joinPaths = exports.joinPaths
-
 /*////////////////////////////
 //
 //  PROMISES
 //
-*/ ////////////////////////////
+*/ ///////////////////////////
 
 
 exports.sleep = function(ms) {
