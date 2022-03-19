@@ -1,6 +1,4 @@
 const utils = require('../../source/utils.js');
-// const puppeteer = require('puppeteer');
-// const fs = require('fs').promises;
 const path = require('path');
 jest.setTimeout(60000)
 
@@ -15,13 +13,13 @@ describe('Utilities', () => {
         await page.goto('http://coursera.org/learn/sustainable-finance')
     })
 
-    // test('addIcons: Load Google\'s Material Icons', async () => {
+    test('addIcons: Load Google\'s Material Icons', async () => {
 
-    //     const styleSheets = await page.evaluate(() => Array.from(document.styleSheets).map(x => x.href))
+        const styleSheets = await page.evaluate(() => Array.from(document.styleSheets).map(x => x.href))
 
-    //     let matIcons = Array.from(styleSheets).filter(
-    //         x => x == "https://fonts.googleapis.com/icon?family=Material+Icons")
+        let matIcons = Array.from(styleSheets).filter(
+            x => x == "https://fonts.googleapis.com/icon?family=Material+Icons")
 
-    //     expect(matIcons).not.toBeUndefined()
-    // })
+        expect(matIcons).not.toBeUndefined()
+    })
 });

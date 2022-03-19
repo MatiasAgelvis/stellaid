@@ -1,5 +1,6 @@
 const path = require('path');
 
+
 // Path to the actual extension we want to be testing
 const pathToExtension = path.join(__dirname, 'distribution')
 
