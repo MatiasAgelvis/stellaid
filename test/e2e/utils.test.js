@@ -15,13 +15,13 @@ describe('Utilities', () => {
         await page.goto('http://coursera.org/learn/sustainable-finance')
     })
 
-    test('addIcons: Load Google\'s Material Icons', async () => {
+    // test('addIcons: Load Google\'s Material Icons', async () => {
 
-        const styleSheets = await page.evaluate(() => Array.from(document.styleSheets).map(x => x.href))
+    //     const styleSheets = await page.evaluate(() => Array.from(document.styleSheets).map(x => x.href))
 
-        let matIcons = Array.from(styleSheets).filter(
-            x => x == "https://fonts.googleapis.com/icon?family=Material+Icons")
+    //     let matIcons = Array.from(styleSheets).filter(
+    //         x => x == "https://fonts.googleapis.com/icon?family=Material+Icons")
 
-        expect(matIcons).not.toBeUndefined()
-    })
+    //     expect(matIcons).not.toBeUndefined()
+    // })
 });
