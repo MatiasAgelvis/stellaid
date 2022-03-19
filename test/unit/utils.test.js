@@ -1,5 +1,24 @@
 const utils = require('../../source/utils.js');
 const path = require('path');
+const { DOMParser, parseHTML } = require('linkedom');
+
+beforeAll(() => {
+    html = '<!DOCTYPE html><html><body><h1>FOO BAR</h1><p>pizza</p></body></html>'
+
+    doc = (new DOMParser).parseFromString(html, 'text/html')
+    doc.location = {
+        host: "example.com",
+        hostname: "example.com",
+        href: "https://example.com/page",
+        origin: "https://example.com",
+        pathname: "/page",
+        protocol: "https:"
+    }
+
+    global.document = doc
+
+})
+
 
 describe('Utilities', () => {
 
@@ -30,7 +49,7 @@ describe('Utilities', () => {
         let string = 'a/b/c/d'
         expect(utils.splitSelect(string, [0])).toEqual(['a'])
         expect(utils.splitSelect(string, [0, 1])).toEqual(['a', 'b'])
-        expect(utils.splitSelect(string, [4])).toBeUndefined
+        expect(utils.splitSelect(string, 4)).toEqual([])
     })
 
     test('makeBagde: return a score and an <i> element', () => {
@@ -42,5 +61,16 @@ describe('Utilities', () => {
 
     test('sleep: return a promise', () => {
         expect(utils.sleep(100)).resolves.toBeUndefined()
+    })
+
+    test('fetchFile: fetches the current document HTML', async () => {
+        expect(await utils.fetchPage('example.com/page')).toMatchObject(doc)
+
+        doc = await utils.fetchPage('example.com')
+        expect(doc.querySelector('h1').innerText).toMatch('Example Domain')
+
+
+
+
     })
 });
