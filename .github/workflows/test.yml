@@ -9,5 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm test
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test --coverage
+
+      - name: 'Upload Code Coverage to Codecov'
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/
+          name: codecov-umbrella
+          path_to_write_report: ./coverage/codecov_report.txt
+          verbose: true
