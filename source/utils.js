@@ -59,8 +59,8 @@ exports.fetchPage = async function(domain, ...paths) {
     // console.debug(url)
 
     // prevents fetching of the current document
-    console.debug(document.location.href)
-    console.debug(url.href)
+    // console.debug(document.location.href)
+    // console.debug(url.href)
     if (typeof document !== "undefined" &&
         url.href == document.location.href) {
         // return cheerio.load(document.documentElement.outerHTML)
