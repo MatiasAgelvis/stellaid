@@ -1,5 +1,7 @@
 const fetch = require('cross-fetch');
-var urljoin = require('url-join');
+const urljoin = require('url-join');
+const { DOMParser, parseHTML } = require('linkedom');
+// const cheerio = require('cheerio');
 
 /*////////////////////////////
 //
@@ -54,24 +56,28 @@ exports.fetchPage = async function(domain, ...paths) {
     }
 
     let url = new URL(urljoin(...paths), domain)
+    // console.debug(url)
 
     // prevents fetching of the current document
-    if (url == document.location.href) {
+    console.debug(document.location.href)
+    console.debug(url.href)
+    if (typeof document !== "undefined" &&
+        url.href == document.location.href) {
+        // return cheerio.load(document.documentElement.outerHTML)
         return document
     }
 
+    let parser = new DOMParser
     let response
     try {
         response = await fetch(url)
     } catch (error) {
         console.error(error)
-        return null
+        return parser.parseFromString('', 'text/html');
     }
 
-    let parser = new DOMParser()
-    let doc = parser.parseFromString(await response.text(), 'text/html')
-
-    return doc
+    // console.debug(response.status)
+    return parser.parseFromString(await response.text(), 'text/html');
 }
 
 /*////////////////////////////
@@ -95,7 +101,8 @@ exports.regexCount = function(str, pattern) {
 //
 */ ///////////////////////////
 
-exports.splitSelect = function(string, index = [1, 2], delimiter = '/') {
+exports.splitSelect = function(string, indexes = [1, 2], delimiter = '/') {
+    let index = Array.from(indexes)
     let splited = string.split(delimiter)
     return index.map(i => splited[i])
 }

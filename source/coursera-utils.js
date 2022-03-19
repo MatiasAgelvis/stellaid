@@ -1,6 +1,6 @@
 var utils = require('./utils.js')
 
-makeID = function(type, name){
+makeID = function(type, name) {
     return utils.makeID('coursera', type, name)
 }
 // var makeID = exports.makeID
@@ -10,8 +10,9 @@ makeScoreNode = function(type, name, message = '') {
 }
 // var makeScoreNode = exports.makeScoreNode
 
-var origin = document.location.origin
-fetchPage = function(...paths){
+const origin = document.location.origin
+
+fetchPage = function(...paths) {
     return utils.fetchPage(origin, ...paths)
 }
 
@@ -35,7 +36,7 @@ exports.Course = class {
         let alreadyVerified = Boolean(scoreNode) && utils.scoreRegex.test(scoreNode.innerText)
         // if the score was already written just read it from the document            
         return alreadyVerified ?
-            parseFloat(utils.scoreRegex.exec(scoreNode.innerText)[1]).toFixed(1) :
+            parseFloat(utils.scoreRegex.exec(scoreNode.innerText)[1]) :
             this.getCourseScore()
     }
 
@@ -96,7 +97,9 @@ exports.Course = class {
             // calculate the score
 
             let peers = this.countLikes(review) ** this.peerPower
+
             let time = this.getAgeOfReview(review) ** this.timedecay
+
 
             score += this.countStars(review) * peers * time
             totalWeight += peers * time
@@ -133,7 +136,8 @@ exports.Course = class {
     }
 
     async getCourseScore() {
-        let doc = await utils.fetchPage(this.type, this.name, 'reviews')
+        let doc = await fetchPage(this.type, this.name, 'reviews')
+
 
         if (!this.checkIfReviewed(doc)) {
             return -1
@@ -147,7 +151,7 @@ exports.Course = class {
         let score = peerStars * this.peerScore(doc) + voxPopuliStars * this.getCourseraScore(doc)
 
         // round to one decimal place
-        score = score.toFixed(1)
+        score = score
 
         return score
     }
@@ -179,7 +183,7 @@ exports.Specialization = class {
 
     async initializer() {
         // this async function finishes the construction
-        this.names = await this.getCoursesPathnames(await utils.fetchPage(this.type, this.name))
+        this.names = await this.getCoursesPathnames(await fetchPage(this.type, this.name))
         this.courses = this.names.map(x => new Course(x))
     }
 
@@ -195,7 +199,7 @@ exports.Specialization = class {
         let sum = filtered.length > 0 ? filtered.reduce(sum_reduce) : 0
         let count = filtered.length
 
-        return sum > 0 ? (sum / count).toFixed(1) : -1
+        return sum > 0 ? (sum / count) : -1
     }
 
     async prettylog() {
@@ -250,9 +254,8 @@ exports.Specialization = class {
         // to improve speed in search pages the whole list of courses
         // will only be taken into account at the specialization page
         // either way the script that reveals the whole list was not loading in time
-        if (showButton && showButton.innerText == 'Show More' &&
-            utils.isCurrentFile(utils.joinPaths(this.type, this.name))) {
-            await utils.sleep(500)
+        if (showButton && showButton.innerText == 'Show More') {
+            await utils.sleep(100)
             showButton.click()
         }
 
@@ -264,7 +267,7 @@ exports.Specialization = class {
         // console.log(pathnames)
 
         // prepare path names
-        return pathnames.map(x => utils.splitSelect(x, [1,2])[1])
+        return pathnames.map(x => utils.splitSelect(x, [1, 2])[1])
     }
 }
 var Specialization = exports.Specialization
@@ -274,7 +277,7 @@ exports.Search = class {
     constructor() {
         return (async () => {
             this.results = await this.pageResults()
-            // console.debug(this.results)
+
             this.names = this.results.map(x => x.pathname)
             this.courses = this.names.map(discriminator)
             let cards = Array.from(document.getElementsByClassName('ratings-text'))
@@ -323,8 +326,8 @@ exports.Search = class {
 }
 var Search = exports.Search
 
-exports.discriminator = function (pathname) {
-    [type, name] = utils.splitSelect(pathname, [1,2])
+exports.discriminator = function(pathname) {
+    [type, name] = utils.splitSelect(pathname, [1, 2])
 
     switch (type) {
         case 'search':
