@@ -1,7 +1,6 @@
 ---
 title: "Matias Agelvis"
 draft: false
-date: 2018-11-19
 image: "images/team/me.png"
 jobtitle: "Do-it-All"
 linkedinurl: "https://www.matiasagelvis.com"
