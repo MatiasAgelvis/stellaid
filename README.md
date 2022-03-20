@@ -1,8 +1,12 @@
-![Stellaid logo](media/Stellaid_Logo+Name.png)
+[![Stellaid logo](media/Stellaid_Logo+Name.png)](http://matiasagelvis.com/stellaid)
 
-[![CodeFactor](https://www.codefactor.io/repository/github/matiasagelvis/stellaid/badge)](https://www.codefactor.io/repository/github/matiasagelvis/stellaid)
+[![CodeFactor][codefactor-image]][codefactor-link] [![codecov][codecov-image]][codecov-link]
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N56KOTY)
+[codefactor-link]: https://www.codefactor.io/repository/github/matiasagelvis/stellaid
+[codefactor-image]: https://www.codefactor.io/repository/github/matiasagelvis/stellaid/badge
+
+[codecov-image]: https://codecov.io/gh/MatiasAgelvis/stellaid/branch/master/graph/badge.svg?token=G55XJU0L2Y
+[codecov-link]: https://codecov.io/gh/MatiasAgelvis/stellaid
 
 [![Get the Stellaid for Chrome](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/mPGKYBIR2uCP0ApchDXE.png)](https://chrome.google.com/webstore/detail/coursera-advisor/ijngbiifjeekcehmaigplbokedchligo?hl=en)
 
@@ -40,3 +44,6 @@ You can also [load the extension manually in Chrome](https://www.smashingmagazin
 
 [Fregante's Browser Extension Template](https://github.com/fregante/browser-extension-template)
 
+## Support Development
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N56KOTY)
