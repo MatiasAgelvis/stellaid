@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Install dependencies
         run: npm install
 
@@ -22,5 +22,4 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage/
           name: codecov-umbrella
-          path_to_write_report: ./coverage/codecov_report.txt
           verbose: true

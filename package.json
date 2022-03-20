@@ -6,7 +6,7 @@
 		"lint-fix": "run-p 'lint:* -- --fix'",
 		"lint:css": "stylelint source/**/*.css",
 		"lint:js": "xo",
-		"test": "jest",
+		"test": "jest --coverage",
 		"test:unit": "jest --projects test/unit",
 		"test:e2e": "jest --projects test/e2e",
 		"watch": "parcel watch source/manifest.json --dist-dir distribution --no-cache --no-hmr"
